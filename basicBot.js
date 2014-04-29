@@ -86,7 +86,7 @@ var esBot = {
         name: "AmazeBot",
         creator: "EuclideanSpace",
         loggedInID: null,
-        scriptLink: "https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js",
+        scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/AmazeBot/master/basicBot.js",
         cmdLink: "http://git.io/245Ppg",
         roomSettings: {
             maximumAfk: 120,
@@ -116,7 +116,7 @@ var esBot = {
             afkRankCheck: "ambassador",                
             motdEnabled: false,
             motdInterval: 5,
-            motd: "Temporary Message of the Day",                
+            motd: "Welcome to the room!",                
             filterChat: true,
             etaRestriction: false,
             welcome: true,
