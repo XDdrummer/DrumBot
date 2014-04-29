@@ -26,7 +26,7 @@
     "afkRankCheck": "ambassador",                
     "motdEnabled": false,
     "motdInterval": 5,
-    "motd": "Temporary Message of the Day",                
+    "motd": "Welcome to the StarlightEDM room!",                
     "filterChat": true,
     "etaRestriction": false,
     "welcome": true,
@@ -34,8 +34,8 @@
     "rulesLink": null,
     "themeLink": null,
     "fbLink": null,
-    "youtubeLink": null,
-    "website": null,
+    "youtubeLink": "http://youtube.com/starlightedm",
+    "website": "http://starlughtedm.com",
     "intervalMessages": [],
     "messageInterval": 5
 }
