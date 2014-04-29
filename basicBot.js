@@ -83,7 +83,7 @@ var retrieveFromStorage = function(){
 var esBot = {
         version: "1.0.8",        
         status: false,
-        name: "AmazeBot",
+        name: "StarlightEDM",
         creator: "EuclideanSpace",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/AmazeBot/master/basicBot.js",
