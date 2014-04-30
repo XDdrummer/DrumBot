@@ -117,7 +117,7 @@ var esBot = {
             afkRankCheck: "ambassador",                
             motdEnabled: false,
             motdInterval: 5,
-            motd: "Welcome to the StarlightEDM room!",                
+            motd: "Hi!",                
             filterChat: true,
             etaRestriction: false,
             welcome: true,
