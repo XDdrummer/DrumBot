@@ -117,7 +117,7 @@ var esBot = {
             afkRankCheck: "ambassador",                
             motdEnabled: false,
             motdInterval: 5,
-            motd: "Hi!",                
+            motd: null,                
             filterChat: true,
             etaRestriction: false,
             welcome: true,
