@@ -1232,7 +1232,7 @@ var esBot = {
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                     //API.sendChat('/me [' + chat.from + ' whips out the banhammer :hammer:]');
-                                    API.moderateBanUser(user.id, 1, API.BAN.DAY);
+                                    API.moderateBanUser(user.id, 1, API.BAN.PERM);
                                 };                              
                         },
                 },
