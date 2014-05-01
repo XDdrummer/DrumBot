@@ -27,7 +27,7 @@
     "afkRankCheck": "ambassador",                
     "motdEnabled": false,
     "motdInterval": 5,
-    "motd": "Welcome to trevinwoodstock's Chill Room!",                
+    "motd": "Welcome to the room!",                
     "filterChat": true,
     "etaRestriction": false,
     "welcome": true,
