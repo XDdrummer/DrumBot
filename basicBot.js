@@ -103,8 +103,7 @@
                 autodisable: true,                
                 commandCooldown: 30,
                 usercommandsEnabled: true,                
-                lockskipPosition: 3,
-                lockskipReasons: [ ["theme", "This song does not fit the room theme. "], 
+                skipReasons: [ ["theme", "This song does not fit the room theme. "], 
                         ["op", "This song is on the Over Played list. "], 
                         ["history", "This song is in the history. "], 
                         ["mix", "You played a mix, which is against the rules. "], 
@@ -1763,11 +1762,11 @@
                                             var validReason = false;
                                             var msg = chat.message;
                                             var reason = msg.substring(cmd.length + 1);       
-                                            for(var i = 0; i < esBot.roomSettings.lockskipReasons.length; i++){
-                                                var r = esBot.roomSettings.lockskipReasons[i][0];
+                                            for(var i = 0; i < esBot.roomSettings.skipReasons.length; i++){
+                                                var r = esBot.roomSettings.skipReasons[i][0];
                                                 if(reason.indexOf(r) !== -1){
                                                     validReason = true;
-                                                    msgSend += esBot.roomSettings.lockskipReasons[i][1];
+                                                    msgSend += esBot.roomSettings.skipReasons[i][1];
                                                 }
                                             }
                                             if(validReason){
