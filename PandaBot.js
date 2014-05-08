@@ -81,17 +81,17 @@
     };
 
     var esBot = {
-            version: "1.0.8",        
+            version: "1.1.6",        
             status: false,
-            name: "TrevBot",
+            name: "PandaBot",
             creator: "trevinwoodstock",
             loggedInID: null,
-            scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/AmazeBot/master/basicBot.js",
-            cmdLink: "http://git.io/t7HBfQ",
+            scriptLink: "https://gist.githubusercontent.com/trevinwoodstock/41ae70f069dd199a8705/raw/plugbot.js",
+            cmdLink: "http://plug.trevin.me/foxbot",
             roomSettings: {
                 maximumAfk: 120,
                 afkRemoval: true,                
-                maximumDc: 60,                                
+                maximumDc: 20,                                
                 bouncerPlus: true,                
                 lockdownEnabled: false,                
                 lockGuard: false,
@@ -99,18 +99,19 @@
                 cycleGuard: true,
                 maximumCycletime: 10,                
                 timeGuard: true,
-                maximumSongLength: 10,                
-                autodisable: true,                
+                maximumSongLength: 8,                
+                autodisable: false,                
                 commandCooldown: 30,
                 usercommandsEnabled: true,                
+                lockskipPosition: 3,
                 skipReasons: [ ["theme", "This song does not fit the room theme. "], 
                         ["op", "This song is on the Over Played list. "], 
-                        ["history", "This song is in the history. "], 
-                        ["mix", "You played a mix, which is against the rules. "], 
+                        ["history", "This song is in the history. "],
+                        ["mix", "You played a mix, which is against the rules. "],
                         ["sound", "The song you played had bad sound quality or no sound. "],
                         ["nsfw", "The song you contained was NSFW/not-PG13/inappropriate (image or sound). "], 
-                        ["unavailable", "The song you played was not available for some users. "], 
-                        ["mehs", "The song you played had more mehs than woots. "]  
+                        ["mehs", "You played a song which recieved more mehs than woots. "],
+                        ["unavailible", "The song you played was not available for some users. "]
                     ],
                 afkpositionCheck: 15,
                 afkRankCheck: "ambassador",                
@@ -119,13 +120,13 @@
                 motd: "Welcome to the official Approaching Nirvana plug.dj room!",                
                 filterChat: true,
                 etaRestriction: false,
-                welcome: true,
+                welcome: false,
                 opLink: null,
                 rulesLink: "http://community.approachingnirvana.com/forum/thread-8.html",
-                themeLink: null,
+                themeLink: "http://en.wikipedia.org/wiki/List_of_electronic_music_genres",
                 website: "http://community.approachingnirvana.com/forum/index.php",
-                intervalMessages: ["Reminder: Please ask before linking.","Please make sure to follow the rules! http://community.approachingnirvana.com/forum/thread-8.html","Our own manager, Geolu_Henge, wrote a tutorial for plug.dj. Check it out!: http://community.approachingnirvana.com/forum/thread-856.html","Join our forums! http://community.approachingnirvana.com"],
-                messageInterval: 9,                      
+                intervalMessages: ["Reminder: Please ask before linking.","Please make sure to follow the rules! http://community.approachingnirvana.com/forum/thread-8.html","Our own manager, Geolu_Henge, wrote a tutorial for plug.dj. Check it out: http://community.approachingnirvana.com/forum/thread-856.html","Join our forums! http://community.approachingnirvana.com","Tip: Check the DJ History (under playlists) before your turn. If your song was played recently, you will be skipped.","If you've disconnected accidentally, within 20 minutes of your return, you may ask staff for a dclookup."],
+                messageInterval: 9,       
             },        
             room: {        
                 users: [],                
@@ -139,12 +140,6 @@
                 autoskip: false,
                 autoskipTimer: null,
                 autodisableInterval: null,
-                autodisableFunc: function(){
-                    if(esBot.status && esBot.roomSettings.autodisable){
-                        API.sendChat('!afkdisable');
-                        API.sendChat('!joindisable');
-                    }
-                },
                 queueing: 0,
                 queueable: true,
                 currentDJID: null,
@@ -457,6 +452,11 @@
                                                 if(pos !== -1){
                                                     pos++;
                                                     esBot.room.afkList.push([id, Date.now(), pos]);
+                                                    user.lastDC = {
+                                                    time: null,
+                                                    position: null,
+                                                    songCount: 0,
+                                                    };
                                                     API.moderateRemoveDJ(id);
                                                     API.sendChat('/me @' + name + ', you have been removed for being afk for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
                                                 }
@@ -595,7 +595,6 @@
                         var interfix = '';
                         if(plays > 1) interfix = 's'
                         API.sendChat('/me :repeat: This song has been played ' + plays + ' time' + interfix + ' in the last ' + esBot.roomUtilities.msToStr(Date.now() - firstPlayed) + ', last play was ' + esBot.roomUtilities.msToStr(Date.now() - lastPlayed) + ' ago. :repeat: ');
-                        API.moderateForceSkip();
 
                         esBot.room.historyList[i].push(+new Date());
                         alreadyPlayed = true;
@@ -716,7 +715,6 @@
                                     }
                             };
                     if(esBot.chatcleaner(chat)){
-                        API.moderateDeleteChat(chat.chatID);
                         return true;
                     }
                     var plugRoomLinkPatt, sender;
@@ -790,6 +788,7 @@
                         case '!english':            esBot.commands.englishCommand.functionality(chat, '!english');                      executed = true; break;
                         case '!eta':                esBot.commands.etaCommand.functionality(chat, '!eta');                              executed = true; break;
                         case '!filter':             esBot.commands.filterCommand.functionality(chat, '!filter');                        executed = true; break;
+                        case '!hi':                 esBot.commands.hiCommand.functionality(chat, '!hi');                                executed = true; break;
                         case '!join':               esBot.commands.joinCommand.functionality(chat, '!join');                            executed = true; break;
                         case '!jointime':           esBot.commands.jointimeCommand.functionality(chat, '!jointime');                    executed = true; break;
                         case '!kick':               esBot.commands.kickCommand.functionality(chat, '!kick');                            executed = true; break;
@@ -808,6 +807,7 @@
                         case '!mute':               esBot.commands.muteCommand.functionality(chat, '!mute');                            executed = true; break;
                         case '!op':                 esBot.commands.opCommand.functionality(chat, '!op');                                executed = true; break;
                         case '!ping':               esBot.commands.pingCommand.functionality(chat, '!ping');                            executed = true; break;
+                        case '!p3':                 esBot.commands.p3Command.functionality(chat, '!p3');                                executed = true; break;
                         case '!reload':             esBot.commands.reloadCommand.functionality(chat, '!reload');                        executed = true; break;
                         case '!remove':             esBot.commands.removeCommand.functionality(chat, '!remove');                        executed = true; break;
                         case '!refresh':            esBot.commands.refreshCommand.functionality(chat, '!refresh');                      executed = true; break;
@@ -820,6 +820,9 @@
                         case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
                         case '!timeguard':          esBot.commands.timeguardCommand.functionality(chat, '!timeguard');                  executed = true; break;
                         case '!togglemotd':         esBot.commands.togglemotdCommand.functionality(chat, '!togglemotd');                executed = true; break;
+                        case '!ts':                 esBot.commands.tsCommand.functionality(chat, '!ts');                                executed = true; break;
+                        case '!tutorial':           esBot.commands.tutorialCommand.functionality(chat, '!tutorial');                    executed = true; break;
+                        case '!twitch':             esBot.commands.twitchCommand.functionality(chat, '!twitch');                        executed = true; break;
                         case '!unban':              esBot.commands.unbanCommand.functionality(chat, '!unban');                          executed = true; break;
                         case '!unlock':             esBot.commands.unlockCommand.functionality(chat, '!unlock');                        executed = true; break;
                         case '!unmute':             esBot.commands.unmuteCommand.functionality(chat, '!unmute');                        executed = true; break;
@@ -854,16 +857,16 @@
                     esBot.room.roomstats.chatmessages++;                                
                 },
                 spam: [
-                    'hueh','hu3','brbr','heu','brbr','kkkk','spoder','mafia','zuera','zueira',
+                    'hueh','hu3','brbr','heu','kkkk','zuera','zueira',
                     'zueria','aehoo','aheu','alguem','algum','brazil','zoeira','fuckadmins','affff','vaisefoder','huenaarea',
-                    'hitler','ashua','ahsu','ashau','lulz','huehue','hue','huehuehue','merda','pqp','puta','mulher','pula','retarda','caralho','filha','ppk',
-                    'gringo','fuder','foder','hua','ahue','modafuka','modafoka','mudafuka','mudafoka','ooooooooooooooo','foda'
+                    'ashua','ahsu','ashau','huehuehue','merda','pqp','puta','mulher','pula','retarda','caralho','filha',
+                    'fuder','foder','hua','ahue','modafuka','modafoka','mudafuka','mudafoka','ooooooooooooooo','foda'
                 ],
                 curses: [
-                    'nigger', 'faggot', 'nigga', 'niqqa','motherfucker','modafocka'
+                    'nigger', 'faggot', 'nigga', 'niqqa','motherfucker','modafocka','fag','fuck','feck','fack','bitch','cunt'
                 ],                        
                 beggarSentences: ['fanme','funme','becomemyfan','trocofa','fanforfan','fan4fan','fan4fan','hazcanfanz','fun4fun','fun4fun',
-                    'meufa','fanz','isnowyourfan','reciprocate','fansme','givefan','fanplz','fanpls','plsfan','plzfan','becomefan','tradefan',
+                    'meufa','fanz','isnowyourfan','fansme','givefan','fanplz','fanpls','plsfan','plzfan','becomefan','tradefan',
                     'fanifan','bemyfan','retribui','gimmefan','fansatfan','fansplz','fanspls','ifansback','fanforfan','addmefan','retribuo',
                     'fantome','becomeafan','fan-to-fan','fantofan','canihavefan','pleasefan','addmeinfan','iwantfan','fanplease','ineedfan',
                     'ineedafan','iwantafan','bymyfan','fannme','returnfan','bymyfan','givemeafan','sejameufa','sejameusfa','sejameuf��',
@@ -1030,7 +1033,7 @@
                     }
                     else return false;                      
                 },                
-                    /**
+                     /**
                     commandCommand: {
                             rank: 'user/bouncer/mod/manager',
                             type: 'startsWith/exact',
@@ -1501,7 +1504,7 @@
                     },
 
                     filterCommand: {
-                            rank: 'bouncer',
+                            rank: 'manager',
                             type: 'exact',
                             functionality: function(chat, cmd){
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
@@ -1516,6 +1519,19 @@
                                             return API.sendChat('/me [@' + chat.from + '] chatfilter enabled.');
                                         } 
                                     
+                                    };                              
+                            },
+                    },
+                
+                
+                 hiCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        API.sendChat("/me [@" + chat.from + "] Hi there!")
                                     };                              
                             },
                     },
@@ -1641,7 +1657,7 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                            return API.sendChat("/me Let's Music is a stream where Sam and Andrew of Approaching Nirvana stream making music. When live, they can be viewed here: http://twitch.tv/approachingnirvana"); API.s
+                                            return API.sendChat("/me Let's Music is a stream where Sam and Andrew of Approaching Nirvana stream making music. When live, they can be viewed here: http://twitch.tv/approachingnirvana"); 
 
                                     };                              
                             },
@@ -1662,7 +1678,7 @@
                                         var dj = API.getDJ().id;
                                         var isDj = false;
                                         if (dj === chat.fromID) isDj = true;
-                                        if(perm >= 1 || isDj){
+                                        if(perm >= 0 || isDj){
                                             if(media.format === '1'){
                                                 var linkToSong = "https://www.youtube.com/watch?v=" + media.cid;
                                                 API.sendChat('/me [' + from + '] Link to current song: ' + linkToSong);
@@ -1751,6 +1767,7 @@
                                                     API.moderateForceSkip();
                                                     esBot.room.skippable = false;
                                                     setTimeout(function(id){
+                                                    esBot.room.skippable = false;
                                                         //esBot.roomUtilities.changeDJCycle();
                                                         
                                                     },1500, id);
@@ -1775,6 +1792,7 @@
                                                     API.moderateForceSkip();
                                                     esBot.room.skippable = false;
                                                     API.sendChat(msgSend);
+                                                    esBot.room.skippable = true;
                                                     setTimeout(function(id){
                                                         //esBot.roomUtilities.changeDJCycle();
                                                         
@@ -1809,7 +1827,7 @@
                     },
 
                     maxlengthCommand: {
-                            rank: 'manager',
+                            rank: 'bouncer',
                             type: 'startsWith',
                             functionality: function(chat, cmd){
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
@@ -1951,6 +1969,19 @@
                                     };                              
                             },
                     },
+                
+                    
+                    p3Command: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        API.sendChat('/me plugCubed is a nice tool you can use with plug.dj. It features autowoot, private messages, and more! Check it out: http://plugcubed.net')
+                                    };                              
+                            },
+                    },
 
                     pingCommand: {
                             rank: 'user',
@@ -1959,7 +1990,7 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        API.sendChat('/me Pong!')
+                                        API.sendChat("/me [@" + chat.from + "] Pong!")
                                     };                              
                             },
                     },
@@ -2008,6 +2039,11 @@
                                             var name = msg.substr(cmd.length + 2);
                                             var user = esBot.userUtilities.lookupUserName(name);
                                             if (typeof user !== 'boolean') {
+                                                user.lastDC = {
+                                                    time: null,
+                                                    position: null,
+                                                    songCount: 0,
+                                                };
                                                 API.moderateRemoveDJ(user.id);                                          
                                             } else API.sendChat("/me [@" + chat.from + "] Specified user @" + name + " is not in the waitlist.");
                                           } else API.sendChat("/me [@" + chat.from + "] No user specified.");
@@ -2213,6 +2249,47 @@
                                     };                              
                             },
                     },
+                    
+                tsCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                            return API.sendChat("/me We have an unofficial Approaching Nirvana TeamSpeak server!  For connection info: http://community.approachingnirvana.com/forum/thread-800.html");
+                                        
+                                    };                              
+                            },
+                    },
+                
+                tutorialCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                            return API.sendChat("/me If you're new to plug.dj, check out this tutorial by our own manager, Geolu_Henge: http://community.approachingnirvana.com/forum/thread-856.html ");
+                                        
+                                    };                              
+                            },
+                    },
+                
+                
+                  twitchCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                            return API.sendChat("/me Approaching Nirvana stream Let's Music and play games on their Twitch! Follow to be notified: http://twitch.tv/approachingnirvana");
+                                        
+                                    };                              
+                            },
+                    },
+                  
 
                     unbanCommand: {
                             rank: 'bouncer',
@@ -2221,21 +2298,31 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        var msg = chat.message;
-                                        if(msg.length === cmd.length) return API.sendChat()
-                                        var name = msg.substring(chat.length + 2);
-                                        var bannedUsers = API.getBannedUsers();
-                                        var found = false;
-                                        for(var i = 0; i < bannedUsers.length; i++){
-                                            var user = bannedUsers[i];
-                                            if(user.username === name){
-                                                id = user.id;
-                                                found = true;
+                                        $(".icon-population").click();
+                                        $(".icon-ban").click();
+                                        setTimeout(function(chat){
+                                            var msg = chat.message;
+                                            if(msg.length === cmd.length) return API.sendChat()
+                                            var name = msg.substring(cmd.length + 2);
+                                            var bannedUsers = API.getBannedUsers();
+                                            var found = false;
+                                            for(var i = 0; i < bannedUsers.length; i++){
+                                                var user = bannedUsers[i];
+                                                if(user.username === name){
+                                                    id = user.id;
+                                                    found = true;
                                             }
                                           }
-                                          if(!found) return API.sendChat('/me [@' + chat.from + '] The user was not banned.');
-                                          
+                                        if(!found){
+                                            $(".icon-chat").click();
+                                            return API.sendChat('/me [@' + chat.from + '] The user was not banned.');  
+                                        }                                
                                         API.moderateUnbanUser(user.id);
+                                        console.log("Unbanned " + name);
+                                        setTimeout(function(){
+                                            $(".icon-chat").click();
+                                        },1000);
+                                    },1000,chat);
                                     
                                     };                              
                             },
