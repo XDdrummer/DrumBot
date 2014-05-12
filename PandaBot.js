@@ -81,7 +81,7 @@
     };
 
     var esBot = {
-            version: "1.1.6",        
+            version: "1.1.8",        
             status: false,
             name: "PandaBot",
             creator: "trevinwoodstock",
@@ -106,7 +106,7 @@
                 lockskipPosition: 3,
                 skipReasons: [ ["theme", "This song does not fit the room theme. "], 
                         ["op", "This song is on the Over Played list. "], 
-                        ["history", "This song is in the history. "],
+                        ["history", "This or another version of this song was recently played. "],
                         ["mix", "You played a mix, which is against the rules. "],
                         ["sound", "The song you played had bad sound quality or no sound. "],
                         ["nsfw", "The song you contained was NSFW/not-PG13/inappropriate (image or sound). "], 
@@ -125,7 +125,7 @@
                 rulesLink: "http://community.approachingnirvana.com/forum/thread-8.html",
                 themeLink: "http://en.wikipedia.org/wiki/List_of_electronic_music_genres",
                 website: "http://community.approachingnirvana.com/forum/index.php",
-                intervalMessages: ["Reminder: Please ask before linking.","Please make sure to follow the rules! http://community.approachingnirvana.com/forum/thread-8.html","Our own manager, Geolu_Henge, wrote a tutorial for plug.dj. Check it out: http://community.approachingnirvana.com/forum/thread-856.html","Join our forums! http://community.approachingnirvana.com","Tip: Check the DJ History (under playlists) before your turn. If your song was played recently, you will be skipped.","If you've disconnected accidentally, within 20 minutes of your return, you may ask staff for a dclookup."],
+                intervalMessages: [],
                 messageInterval: 9,       
             },        
             room: {        
@@ -137,7 +137,7 @@
                 usercommand: true,
                 allcommand: true,   
                 afkInterval: null,
-                autoskip: false,
+                autoskip: true,
                 autoskipTimer: null,
                 autodisableInterval: null,
                 queueing: 0,
@@ -434,14 +434,14 @@
                                         var warncount = user.afkWarningCount;
                                         if (inactivity > esBot.roomSettings.maximumAfk * 60 * 1000 ){
                                             if(warncount === 0){
-                                                API.sendChat('/me @' + name + ', you have been afk for ' + time + ', please respond within 2 minutes or you will be removed.');
+                                                API.sendChat('/me @' + name + ', you have been inactive for ' + time + ', please respond within 2 minutes or you will be removed.');
                                                 user.afkWarningCount = 3;
                                                 user.afkCountdown = setTimeout(function(userToChange){
                                                     userToChange.afkWarningCount = 1; 
                                                 }, 90 * 1000, user);
                                             }
                                             else if(warncount === 1){
-                                                API.sendChat("/me @" + name + ", you will be removed soon if you don't respond. [AFK]");
+                                                API.sendChat("/me @" + name + ", you will be removed soon if you don't respond. [Inactive]");
                                                 user.afkWarningCount = 3;
                                                 user.afkCountdown = setTimeout(function(userToChange){
                                                     userToChange.afkWarningCount = 2;
@@ -458,7 +458,7 @@
                                                     songCount: 0,
                                                     };
                                                     API.moderateRemoveDJ(id);
-                                                    API.sendChat('/me @' + name + ', you have been removed for being afk for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
+                                                    API.sendChat('/me @' + name + ', you have been removed for being inactive for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
                                                 }
                                                 user.afkWarningCount = 0;
                                             };
@@ -593,9 +593,7 @@
                         var lastPlayed = esBot.room.historyList[i][plays];
                         var now = +new Date();
                         var interfix = '';
-                        if(plays > 1) interfix = 's'
-                        API.sendChat('/me :repeat: This song has been played ' + plays + ' time' + interfix + ' in the last ' + esBot.roomUtilities.msToStr(Date.now() - firstPlayed) + ', last play was ' + esBot.roomUtilities.msToStr(Date.now() - lastPlayed) + ' ago. :repeat: ');
-
+                        
                         esBot.room.historyList[i].push(+new Date());
                         alreadyPlayed = true;
                     }
@@ -817,16 +815,21 @@
                         case '!sessionstats':       esBot.commands.sessionstatsCommand.functionality(chat, '!sessionstats');            executed = true; break;
                         case '!status':             esBot.commands.statusCommand.functionality(chat, '!status');                        executed = true; break;
                         case '!steam':              esBot.commands.steamCommand.functionality(chat, '!steam');                          executed = true; break;
+                        case '!stream':             esBot.commands.streamCommand.functionality(chat, '!stream');                        executed = true; break;                        
+                        case '!suggest':            esBot.commands.suggestCommand.functionality(chat, '!suggest');                      executed = true; break;
                         case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
                         case '!timeguard':          esBot.commands.timeguardCommand.functionality(chat, '!timeguard');                  executed = true; break;
                         case '!togglemotd':         esBot.commands.togglemotdCommand.functionality(chat, '!togglemotd');                executed = true; break;
                         case '!ts':                 esBot.commands.tsCommand.functionality(chat, '!ts');                                executed = true; break;
+                        case '!teamspeak':          esBot.commands.tsCommand.functionality(chat, '!ts');                                executed = true; break;
                         case '!tutorial':           esBot.commands.tutorialCommand.functionality(chat, '!tutorial');                    executed = true; break;
                         case '!twitch':             esBot.commands.twitchCommand.functionality(chat, '!twitch');                        executed = true; break;
                         case '!unban':              esBot.commands.unbanCommand.functionality(chat, '!unban');                          executed = true; break;
                         case '!unlock':             esBot.commands.unlockCommand.functionality(chat, '!unlock');                        executed = true; break;
                         case '!unmute':             esBot.commands.unmuteCommand.functionality(chat, '!unmute');                        executed = true; break;
                         case '!usercmdcd':          esBot.commands.usercmdcdCommand.functionality(chat, '!usercmdcd');                  executed = true; break;
+                        case '!username':           esBot.commands.usernameCommand.functionality(chat, '!username');                    executed = true; break;
+                        case '!version':            esBot.commands.versionCommand.functionality(chat, '!version');                      executed = true; break;
                         case '!usercommands':       esBot.commands.usercommandsCommand.functionality(chat, '!usercommands');            executed = true; break;
                         case '!voteratio':          esBot.commands.voteratioCommand.functionality(chat, '!voteratio');                  executed = true; break;
                         case '!welcome':            esBot.commands.welcomeCommand.functionality(chat, '!welcome');                      executed = true; break;
@@ -1299,7 +1302,7 @@
                     },
 
                     cookieCommand: {
-                            rank: 'user',
+                            rank: 'bouncer',
                             type: 'startsWith',
 
                             cookies: ['has given you a chocolate chip cookie!',
@@ -1317,7 +1320,7 @@
                                        'gives you a fortune cookie. It reads "m808 pls"',
                                        'gives you a fortune cookie. It reads "If you move your hips, you\'ll get all the ladies."',
                                        'gives you a fortune cookie. It reads "I love you."',
-                                       'gives you a Golden Cookie. You can\'t eat it because it is made of gold. Dammit.',
+                                       'gives you a Golden Cookie. You can\'t eat it because it is made of gold. Dangit.',
                                        'gives you an Oreo cookie with a glass of milk!',
                                        'gives you a rainbow cookie made with love :heart:',
                                        'gives you an old cookie that was left out in the rain, it\'s moldy.',
@@ -1344,7 +1347,7 @@
                                             var name = msg.substring(space + 2);
                                             var user = esBot.userUtilities.lookupUserName(name);
                                             if (user === false || !user.inRoom) {
-                                              return API.sendChat("/em doesn't see '" + name + "' in room and eats a cookie himself.");
+                                              return API.sendChat("/em doesn't see '" + name + "' in the room and eats a cookie himself.");
                                             } 
                                             else if(user.username === chat.from){
                                                 return API.sendChat("/me @" + name +  ", you're a bit greedy, aren't you? Giving cookies to yourself, bah. Share some with other people!")
@@ -2193,6 +2196,30 @@
                                     };                              
                             },
                     },
+                    
+                    steamCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                            return API.sendChat("/me Approaching Nirvana stream a DJ set on each Friday at 5pm EST. To see what time that is for you, visit: http://everytimezone.com/#2014-5-9,540,6bj come! http://approachingnirvana.com/live ");                                
+                                    };                              
+                            },
+                    },
+                            
+                    suggestCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://goo.gl/H6GsA8 ')
+                                    };                              
+                            },
+                    },
 
 
 
@@ -2426,6 +2453,36 @@
                             },
                     },
 
+                    usernameCommand: {
+                            rank: 'bouncer',
+                            type: 'startsWith',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        if(chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
+                                        var name = chat.message.substring(cmd.length + 2);
+                                        var user = esBot.userUtilities.lookupUserName(name);
+                                        if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
+                                        var lang = esBot.userUtilities.getUser(user).language;
+                                        var ch = '/me @' + name + ' , please change your username to fit our username-basedrules: Usernames: No all capitals, sentences, offensive/racist language or symbols.';
+                                        API.sendChat(ch);
+                                    };                              
+                            },
+                    },
+                    
+                    versionCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        API.sendChat("/me" + esBot.name + " is currently running v" + esBot.version + "." )
+                                    };                              
+                            },
+                    },
+
                     voteratioCommand: {
                             rank: 'bouncer',
                             type: 'startsWith',
@@ -2446,7 +2503,7 @@
                     },
 
                     welcomeCommand: {
-                            rank: 'bouncer',
+                            rank: 'manager',
                             type: 'exact',
                             functionality: function(chat, cmd){
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
