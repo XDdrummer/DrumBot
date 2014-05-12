@@ -2217,7 +2217,7 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://plug.trevin.me ')
+                                        API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://plug.trevin.me/suggest ')
                                     };                              
                             },
                     },
