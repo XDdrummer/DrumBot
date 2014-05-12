@@ -2465,8 +2465,7 @@
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
                                         var lang = esBot.userUtilities.getUser(user).language;
-                                        var ch = '/me @' + name + ' , please change your username to fit our username-basedrules: Usernames: No all capitals, sentences, offensive/racist language or symbols.';
-                                        API.sendChat(ch);
+                                        API.sendChat('/me @' + name + ' , please change your username to fit our username-basedrules: Usernames: No all capitals, sentences, offensive/racist language or symbols.');
                                     };                              
                             },
                     },
