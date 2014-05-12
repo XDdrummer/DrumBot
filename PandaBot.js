@@ -817,6 +817,7 @@
                         case '!steam':              esBot.commands.steamCommand.functionality(chat, '!steam');                          executed = true; break;
                         case '!stream':             esBot.commands.streamCommand.functionality(chat, '!stream');                        executed = true; break;                        
                         case '!suggest':            esBot.commands.suggestCommand.functionality(chat, '!suggest');                      executed = true; break;
+                        case '!source':             esBot.commands.sourceCommand.functionality(chat, '!source');                        executed = true; break;
                         case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
                         case '!timeguard':          esBot.commands.timeguardCommand.functionality(chat, '!timeguard');                  executed = true; break;
                         case '!togglemotd':         esBot.commands.togglemotdCommand.functionality(chat, '!togglemotd');                executed = true; break;
@@ -2216,7 +2217,7 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://goo.gl/H6GsA8 ')
+                                        API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://plug.trevin.me ')
                                     };                              
                             },
                     },
