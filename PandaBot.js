@@ -86,7 +86,7 @@
             name: "PandaBot",
             creator: "trevinwoodstock",
             loggedInID: null,
-            scriptLink: "https://gist.githubusercontent.com/trevinwoodstock/41ae70f069dd199a8705/raw/plugbot.js",
+            scriptLink: "https://gist.githubusercontent.com/trevinwoodstock/41ae70f069dd199a8705/raw/pandabot.js",
             cmdLink: "http://plug.trevin.me/foxbot",
             roomSettings: {
                 maximumAfk: 120,
