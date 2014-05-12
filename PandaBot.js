@@ -2128,7 +2128,7 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        API.sendChat('/me This bot is maintaned by ' + esBot.creator + ', but base code is by EuclideanSpace.');
+                                        API.sendChat('/me This bot is maintaned by ' + esBot.creator + ', but base code is by EuclideanSpace. The code for this bot is located here: https://github.com/trevinwoodstock/PandaBot ');
                                     };                              
                             },
                     },
