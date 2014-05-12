@@ -2460,11 +2460,8 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        if(chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
-                                        var name = chat.message.substring(cmd.length + 2);
-                                        var user = esBot.userUtilities.lookupUserName(name);
-                                        if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
-                                        API.sendChat('/me @' + name + ' , please change your username to fit our username-basedrules: Usernames: No all capitals, sentences, offensive/racist language or symbols.');
+                                        if(typeof esBot.roomSettings.rulesLink === "string")
+                                            return API.sendChat("/me Usernames: No all capitals, sentences, offensive/racist language or symbols.");                                
                                     };                              
                             },
                     },
