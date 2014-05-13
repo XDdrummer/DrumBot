@@ -434,7 +434,7 @@
                                         var warncount = user.afkWarningCount;
                                         if (inactivity > esBot.roomSettings.maximumAfk * 60 * 1000 ){
                                             if(warncount === 0){
-                                                API.sendChat('/me @' + name + ', you have been inactive for ' + time + ', please respond within 2 minutes or you will be removed.');
+                                                API.sendChat('/me @' + name + ', you have been inactive for ' + time + ', please respond within 2 minutes or you will be removed from the waitlist.');
                                                 user.afkWarningCount = 3;
                                                 user.afkCountdown = setTimeout(function(userToChange){
                                                     userToChange.afkWarningCount = 1; 
@@ -2467,7 +2467,7 @@
                                         if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
                                         var lang = esBot.userUtilities.getUser(user).language;
                                         var ch = '/me @' + name + ' ';
-                                        ch += ' Please change your username as it does one or multiple of the following: Username is in: all capitals, sentences, offensive/racist language or symbols.';
+                                        ch += ' Please change your username as breaks one or multiple of the following rules: all capitals, sentences, offensive/racist language or symbols.';
                                         API.sendChat(ch);
                                     };                              
                             },
