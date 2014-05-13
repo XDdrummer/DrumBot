@@ -81,7 +81,7 @@
     };
 
     var esBot = {
-            version: "1.1.9",        
+            version: "1.2.0",        
             status: false,
             name: "PandaBot",
             creator: "trevinwoodstock",
@@ -2461,8 +2461,14 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        if(typeof esBot.roomSettings.rulesLink === "string")
-                                            return API.sendChat("/me Usernames: No all capitals, sentences, offensive/racist language or symbols.");                                
+                                        if(chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
+                                        var name = chat.message.substring(cmd.length + 2);
+                                        var user = esBot.userUtilities.lookupUserName(name);
+                                        if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
+                                        var lang = esBot.userUtilities.getUser(user).language;
+                                        var ch = '/me @' + name + ' ';
+                                        ch += ' Please change your username as it does one or multiple of the following: Username is in: all capitals, sentences, offensive/racist language or symbols.';
+                                        API.sendChat(ch);
                                     };                              
                             },
                     },
