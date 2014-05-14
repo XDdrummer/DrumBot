@@ -87,7 +87,7 @@
             creator: "trevinwoodstock",
             loggedInID: null,
             scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/PandaBot/master/PandaBot.js",
-            cmdLink: "http://plug.trevin.me/bot",
+            cmdLink: "http://trevin.me",
             roomSettings: {
                 maximumAfk: 120,
                 afkRemoval: true,
