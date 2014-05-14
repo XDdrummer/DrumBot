@@ -1,5 +1,5 @@
     /**
-     * @license Copyright (C) 2014 
+     * @license Copyright (C) 2014
      *
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU General Public License as published by
@@ -81,43 +81,43 @@
     };
 
     var esBot = {
-            version: "1.2.0",        
+            version: "1.2.1",
             status: false,
             name: "PandaBot",
             creator: "trevinwoodstock",
             loggedInID: null,
             scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/PandaBot/master/PandaBot.js",
-            cmdLink: "http://plug.trevin.me/foxbot",
+            cmdLink: "http://plug.trevin.me/bot",
             roomSettings: {
                 maximumAfk: 120,
-                afkRemoval: true,                
-                maximumDc: 20,                                
-                bouncerPlus: true,                
-                lockdownEnabled: false,                
+                afkRemoval: true,
+                maximumDc: 20,
+                bouncerPlus: true,
+                lockdownEnabled: false,
                 lockGuard: false,
-                maximumLocktime: 10,                
+                maximumLocktime: 10,
                 cycleGuard: true,
-                maximumCycletime: 10,                
+                maximumCycletime: 10,
                 timeGuard: true,
-                maximumSongLength: 8,                
-                autodisable: false,                
+                maximumSongLength: 8,
+                autodisable: false,
                 commandCooldown: 30,
-                usercommandsEnabled: true,                
+                usercommandsEnabled: true,
                 lockskipPosition: 3,
-                skipReasons: [ ["theme", "This song does not fit the room theme. "], 
-                        ["op", "This song is on the Over Played list. "], 
+                skipReasons: [ ["theme", "This song does not fit the room theme. "],
+                        ["op", "This song is on the Over Played list. "],
                         ["history", "This or another version of this song was recently played. "],
                         ["mix", "You played a mix, which is against the rules. "],
                         ["sound", "The song you played had bad sound quality or no sound. "],
-                        ["nsfw", "The song you contained was NSFW/not-PG13/inappropriate (image or sound). "], 
+                        ["nsfw", "The song you contained was NSFW/not-PG13/inappropriate (image or sound). "],
                         ["mehs", "You played a song which recieved more mehs than woots. "],
                         ["unavailible", "The song you played was not available for some users. "]
                     ],
                 afkpositionCheck: 15,
-                afkRankCheck: "ambassador",                
+                afkRankCheck: "ambassador",
                 motdEnabled: false,
                 motdInterval: 5,
-                motd: "Welcome to the official Approaching Nirvana plug.dj room!",                
+                motd: "Welcome to the official Approaching Nirvana plug.dj room!",
                 filterChat: true,
                 etaRestriction: false,
                 welcome: false,
@@ -126,16 +126,16 @@
                 themeLink: "http://en.wikipedia.org/wiki/List_of_electronic_music_genres",
                 website: "http://community.approachingnirvana.com/forum/index.php",
                 intervalMessages: [],
-                messageInterval: 9,       
-            },        
-            room: {        
-                users: [],                
-                afkList: [],                
+                messageInterval: 9,
+            },
+            room: {
+                users: [],
+                afkList: [],
                 mutedUsers: [],
                 bannedUsers: [],
                 skippable: true,
                 usercommand: true,
-                allcommand: true,   
+                allcommand: true,
                 afkInterval: null,
                 autoskip: true,
                 autoskipTimer: null,
@@ -144,7 +144,7 @@
                 queueable: true,
                 currentDJID: null,
                 historyList: [],
-                cycleTimer: setTimeout(function(){},1),                
+                cycleTimer: setTimeout(function(){},1),
                 roomstats: {
                         accountName: null,
                         totalWoots: 0,
@@ -152,16 +152,16 @@
                         totalMehs: 0,
                         launchTime: null,
                         songCount: 0,
-                        chatmessages: 0,                
+                        chatmessages: 0,
                 },
                 messages: {
                     from: [],
                     to: [],
                     message: [],
-                },                
+                },
                 queue: {
                         id: [],
-                        position: [],                             
+                        position: [],
                 },
                 roulette: {
                     rouletteStatus: false,
@@ -187,66 +187,66 @@
 
                     },
                 },
-            },        
+            },
             User: function(id, name) {
                 this.id = id;
-                this.username = name;        
+                this.username = name;
                 this.jointime = Date.now();
-                this.lastActivity = Date.now();         
+                this.lastActivity = Date.now();
                 this.votes = {
                         woot: 0,
                         meh: 0,
                         curate: 0,
                 };
-                this.lastEta = null;            
-                this.afkWarningCount = 0;            
-                this.afkCountdown;            
-                this.inRoom = true;            
+                this.lastEta = null;
+                this.afkWarningCount = 0;
+                this.afkCountdown;
+                this.inRoom = true;
                 this.isMuted = false;
                 this.lastDC = {
                         time: null,
                         position: null,
                         songCount: 0,
                 };
-                this.lastKnownPosition = null;       
-            },      
+                this.lastKnownPosition = null;
+            },
             userUtilities: {
                 getJointime: function(user){
                     return user.jointime;
-                    },                        
+                    },
                 getUser: function(user){
                     return API.getUser(user.id);
                     },
                 updatePosition: function(user, newPos){
                         user.lastKnownPosition = newPos;
-                    },                      
+                    },
                 updateDC: function(user){
                     user.lastDC.time = Date.now();
                     user.lastDC.position = user.lastKnownPosition;
                     user.lastDC.songCount = esBot.room.roomstats.songCount;
-                    },                
+                    },
                 setLastActivity: function(user) {
                     user.lastActivity = Date.now();
                     user.afkWarningCount = 0;
-                    clearTimeout(user.afkCountdown);          
-                    },                        
+                    clearTimeout(user.afkCountdown);
+                    },
                 getLastActivity: function(user) {
                     return user.lastActivity;
-                    },                        
+                    },
                 getWarningCount: function(user) {
                     return user.afkWarningCount;
-                    },                        
+                    },
                 setWarningCount: function(user, value) {
                     user.afkWarningCount = value;
-                    },        
+                    },
                 lookupUser: function(id){
                     for(var i = 0; i < esBot.room.users.length; i++){
-                            if(esBot.room.users[i].id === id){                                        
+                            if(esBot.room.users[i].id === id){
                                     return esBot.room.users[i];
                             }
                     }
                     return false;
-                },                
+                },
                 lookupUserName: function(name){
                     for(var i = 0; i < esBot.room.users.length; i++){
                             if(esBot.userUtilities.getUser(esBot.room.users[i]).username === name){
@@ -254,29 +254,29 @@
                             }
                     }
                     return false;
-                },                
+                },
                 voteRatio: function(id){
                     var user = esBot.userUtilities.lookupUser(id);
                     var votes = user.votes;
                     if(votes.meh=== 0) votes.ratio = 1;
                     else votes.ratio = (votes.woot / votes.meh).toFixed(2);
                     return votes;
-                
-                },                
+
+                },
                 getPermission: function(id){ //1 requests
                     var u = API.getUser(id);
                     return u.permission;
-                },                
+                },
                 moveUser: function(id, pos, priority){
                     var user = esBot.userUtilities.lookupUser(id);
                     var wlist = API.getWaitList();
-                    if(API.getWaitListPosition(id) === -1){                    
+                    if(API.getWaitListPosition(id) === -1){
                         if (wlist.length < 50){
                             API.moderateAddDJ(id);
-                            if (pos !== 0) setTimeout(function(id, pos){ 
-                                API.moderateMoveDJ(id, pos);        
+                            if (pos !== 0) setTimeout(function(id, pos){
+                                API.moderateMoveDJ(id, pos);
                             },1250, id, pos);
-                        }                            
+                        }
                         else{
                             var alreadyQueued = -1;
                             for (var i = 0; i < esBot.room.queue.id.length; i++){
@@ -299,10 +299,10 @@
                             return API.sendChat('/me Added @' + name + ' to the queue. Current queue: ' + esBot.room.queue.position.length + '.');
                         }
                     }
-                    else API.moderateMoveDJ(id, pos);                    
-                },        
+                    else API.moderateMoveDJ(id, pos);
+                },
                 dclookup: function(id){
-                    var user = esBot.userUtilities.lookupUser(id);                        
+                    var user = esBot.userUtilities.lookupUser(id);
                     if(typeof user === 'boolean') return ('/me User not found.');
                     var name = user.username;
                     if(user.lastDC.time === null) return ('/me @' + name + ' did not disconnect during my time here.');
@@ -313,7 +313,7 @@
                     var validDC = false;
                     if(esBot.roomSettings.maximumDc * 60 * 1000 > timeDc){
                         validDC = true;
-                    }                        
+                    }
                     var time = esBot.roomUtilities.msToStr(timeDc);
                     if(!validDC) return ("/me @" + esBot.userUtilities.getUser(user).username + "'s last disconnect (DC or leave) was too long ago: " + time + ".");
                     var songsPassed = esBot.room.roomstats.songCount - user.lastDC.songCount;
@@ -330,10 +330,10 @@
                     if(newPosition <= 0) newPosition = 1;
                     var msg = '/me @' + esBot.userUtilities.getUser(user).username + ' disconnected ' + time + ' ago and should be at position ' + newPosition + '.';
                     esBot.userUtilities.moveUser(user.id, newPosition, true);
-                    return msg;             
-                },              
+                    return msg;
+                },
             },
-            
+
             roomUtilities: {
                 rankToNumber: function(rankString){
                     var rankInt = null;
@@ -348,7 +348,7 @@
                         case "user":            rankInt = 0;    break;
                     }
                     return rankInt;
-                },        
+                },
                 msToStr: function(msTime){
                     var ms, msg, timeAway;
                     msg = '';
@@ -363,7 +363,7 @@
                       'hour': 60 * 60 * 1000,
                       'minute': 60 * 1000,
                       'second': 1000
-                    };                        
+                    };
                     if (msTime > ms.day) {
                       timeAway.days = Math.floor(msTime / ms.day);
                       msTime = msTime % ms.day;
@@ -378,7 +378,7 @@
                     }
                     if (msTime > ms.second) {
                       timeAway.seconds = Math.floor(msTime / ms.second);
-                    }                        
+                    }
                     if (timeAway.days !== 0) {
                       msg += timeAway.days.toString() + 'd';
                     }
@@ -395,11 +395,11 @@
                       return msg;
                     } else {
                       return false;
-                    }                       
-                },                
-                booth:{                
-                    lockTimer: setTimeout(function(){},1000),                        
-                    locked: false,                        
+                    }
+                },
+                booth:{
+                    lockTimer: setTimeout(function(){},1000),
+                    locked: false,
                     lockBooth: function(){
                         API.moderateLockWaitList(!esBot.roomUtilities.booth.locked);
                         esBot.roomUtilities.booth.locked = false;
@@ -407,13 +407,13 @@
                             esBot.roomUtilities.booth.lockTimer = setTimeout(function (){
                                 API.moderateLockWaitList(esBot.roomUtilities.booth.locked);
                             },esBot.roomSettings.maximumLocktime * 60 * 1000);
-                        };                        
-                    },                        
+                        };
+                    },
                     unlockBooth: function() {
                       API.moderateLockWaitList(esBot.roomUtilities.booth.locked);
                       clearTimeout(esBot.roomUtilities.booth.lockTimer);
-                    },                
-                },                
+                    },
+                },
                 afkCheck: function(){
                     if(!esBot.status || !esBot.roomSettings.afkRemoval) return void (0);
                         var rank = esBot.roomUtilities.rankToNumber(esBot.roomSettings.afkRankCheck);
@@ -437,7 +437,7 @@
                                                 API.sendChat('/me @' + name + ', you have been inactive for ' + time + ', please respond within 2 minutes or you will be removed from the waitlist.');
                                                 user.afkWarningCount = 3;
                                                 user.afkCountdown = setTimeout(function(userToChange){
-                                                    userToChange.afkWarningCount = 1; 
+                                                    userToChange.afkWarningCount = 1;
                                                 }, 90 * 1000, user);
                                             }
                                             else if(warncount === 1){
@@ -458,7 +458,7 @@
                                                     songCount: 0,
                                                     };
                                                     API.moderateRemoveDJ(id);
-                                                    API.sendChat('/me @' + name + ', you have been removed for being inactive for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
+                                                    API.sendChat('/me @' + name + ', you have been removed for being inactive for ' + time + '. You were at position ' + pos + '.');
                                                 }
                                                 user.afkWarningCount = 0;
                                             };
@@ -466,8 +466,8 @@
                                     }
                                 }
                             }
-                        }                
-                },                
+                        }
+                },
                 changeDJCycle: function(){
                     var toggle = $(".cycle-toggle");
                     if(toggle.hasClass("disabled")) {
@@ -476,12 +476,12 @@
                         esBot.room.cycleTimer = setTimeout(function(){
                                 if(toggle.hasClass("enabled")) toggle.click();
                                 }, esBot.roomSettings.cycleMaxTime * 60 * 1000);
-                        }        
+                        }
                     }
                     else {
                         toggle.click();
                         clearTimeout(esBot.room.cycleTimer);
-                    }        
+                    }
                 },
                 intervalMessage: function(){
                     var interval;
@@ -496,11 +496,11 @@
                             if(esBot.roomSettings.intervalMessages.length === 0) return void (0);
                             var messageNumber = esBot.room.roomstats.songCount % esBot.roomSettings.intervalMessages.length;
                             msg = esBot.roomSettings.intervalMessages[messageNumber];
-                        };                              
+                        };
                         API.sendChat('/me ' + msg);
                     }
-                },      
-            },        
+                },
+            },
             eventChat: function(chat){
                 for(var i = 0; i < esBot.room.users.length;i++){
                     if(esBot.room.users[i].id === chat.fromID){
@@ -508,12 +508,12 @@
                             if(esBot.room.users[i].username !== chat.from){
                                     esBot.room.users[i].username = chat.from;
                             }
-                    }                            
-                }                        
+                    }
+                }
                 if(esBot.chatUtilities.chatFilter(chat)) return void (0);
-                if( !esBot.chatUtilities.commandCheck(chat) ) 
-                        esBot.chatUtilities.action(chat);             
-            },        
+                if( !esBot.chatUtilities.commandCheck(chat) )
+                        esBot.chatUtilities.action(chat);
+            },
             eventUserjoin: function(user){
                 var known = false;
                 var index = null;
@@ -535,20 +535,20 @@
                 else{
                     esBot.room.users.push(new esBot.User(user.id, user.username));
                     var welcome = "Welcome ";
-                }    
+                }
                 for(var j = 0; j < esBot.room.users.length;j++){
                     if(esBot.userUtilities.getUser(esBot.room.users[j]).id === user.id){
                         esBot.userUtilities.setLastActivity(esBot.room.users[j]);
                         esBot.room.users[j].jointime = Date.now();
                     }
-                
+
                 }
                 if(esBot.roomSettings.welcome && greet){
                     setTimeout(function(){
                         API.sendChat("/me " + welcome + "@" + user.username + ".");
                     }, 1*1000);
-                }               
-            },        
+                }
+            },
             eventUserleave: function(user){
                 for(var i = 0; i < esBot.room.users.length;i++){
                     if(esBot.room.users[i].id === user.id){
@@ -556,7 +556,7 @@
                             esBot.room.users[i].inRoom = false;
                     }
                 }
-            },        
+            },
             eventVoteupdate: function(obj){
                 for(var i = 0; i < esBot.room.users.length;i++){
                     if(esBot.room.users[i].id === obj.user.id){
@@ -564,19 +564,19 @@
                             esBot.room.users[i].votes.woot++;
                         }
                         else{
-                            esBot.room.users[i].votes.meh++;                                        
+                            esBot.room.users[i].votes.meh++;
                         }
                     }
-                }               
-            },        
+                }
+            },
             eventCurateupdate: function(obj){
                 for(var i = 0; i < esBot.room.users.length;i++){
                     if(esBot.room.users[i].id === obj.user.id){
                         esBot.room.users[i].votes.curate++;
                     }
-                }       
-            },        
-            eventDjadvance: function(obj){                
+                }
+            },
+            eventDjadvance: function(obj){
                 var lastplay = obj.lastPlay;
                 if(typeof lastplay === 'undefined') return void (0);
                 esBot.room.roomstats.totalWoots += lastplay.score.positive;
@@ -593,7 +593,7 @@
                         var lastPlayed = esBot.room.historyList[i][plays];
                         var now = +new Date();
                         var interfix = '';
-                        
+
                         esBot.room.historyList[i].push(+new Date());
                         alreadyPlayed = true;
                     }
@@ -608,15 +608,10 @@
                     API.sendChat('/me @' + name + ', your song is longer than ' + esBot.roomSettings.maximumSongLength + ' minutes, you need permission to play longer songs.');
                     API.moderateForceSkip();
                 }
-                var user = esBot.userUtilities.lookupUser(obj.dj.id);
-                if(user.ownSong){
-                    API.sendChat('/me :up: @' + user.username + ' has permission to play their own production!');
-                    user.ownSong = false;
-                }
                 user.lastDC.position = null;
                 clearTimeout(esBot.room.autoskipTimer);
                 if(esBot.room.autoskip){
-                    var remaining = media.duration * 1000; 
+                    var remaining = media.duration * 1000;
                     esBot.room.autoskipTimer = setTimeout(function(){ API.moderateForceSkip(); }, remaining - 500);
                 }
                 storeToStorage();
@@ -644,7 +639,7 @@
                                 },1000,id,pos);
                         },1000 + esBot.room.queueing * 2500);
                     }
-                }            
+                }
                 for(var i = 0; i < users.length; i++){
                     var user = esBot.userUtilities.lookupUser(users[i].id)
                     esBot.userUtilities.updatePosition(user, users[i].wlIndex + 1);
@@ -690,10 +685,10 @@
                         API.sendChat("/me @" + chat.from + ", please don't ask for fans.");
                         return true;
                     }
-                } 
+                }
                 return false;
-            },        
-            chatUtilities: {        
+            },
+            chatUtilities: {
                 chatFilter: function(chat){
                     var msg = chat.message;
                     var perm = esBot.userUtilities.getPermission(chat.fromID);
@@ -707,7 +702,7 @@
                         return true;
                         };
                     if(esBot.roomSettings.lockdownEnabled){
-                                    if(perm === 0){    
+                                    if(perm === 0){
                                             API.moderateDeleteChat(chat.chatID);
                                             return true;
                                     }
@@ -719,7 +714,7 @@
                         plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                         if (plugRoomLinkPatt.exec(msg)) {
                           sender = API.getUser(chat.fromID);
-                          if (perm === 0) {                                                              
+                          if (perm === 0) {
                                   API.sendChat("/me @" + chat.from + ", don't post links to other rooms please.");
                                   API.moderateDeleteChat(chat.chatID);
                                   return true;
@@ -729,13 +724,13 @@
                         API.moderateDeleteChat(chat.chatID);
                         API.sendChat('/me @' + chat.from + ', please change your autowoot program. We suggest PlugCubed: http://plugcubed.net/');
                         return true;
-                    }                    
-                    if(msg.indexOf('autojoin was not enabled') > 0 || msg.indexOf('AFK message was not enabled') > 0 || msg.indexOf('!afkdisable') > 0 || msg.indexOf('!joindisable') > 0 || msg.indexOf('autojoin disabled') > 0 || msg.indexOf('AFK message disabled') > 0){ 
+                    }
+                    if(msg.indexOf('autojoin was not enabled') > 0 || msg.indexOf('AFK message was not enabled') > 0 || msg.indexOf('!afkdisable') > 0 || msg.indexOf('!joindisable') > 0 || msg.indexOf('autojoin disabled') > 0 || msg.indexOf('AFK message disabled') > 0){
                         API.moderateDeleteChat(chat.chatID);
                         return true;
-                    }                       
-                return false;                        
-                },                        
+                    }
+                return false;
+                },
                 commandCheck: function(chat){
                     var cmd;
                     if(chat.message.charAt(0) === '!'){
@@ -747,10 +742,10 @@
                     }
                     else return false;
                     var userPerm = esBot.userUtilities.getPermission(chat.fromID);
-                    if(chat.message !== "!join" && chat.message !== "!leave"){                            
+                    if(chat.message !== "!join" && chat.message !== "!leave"){
                         if(userPerm === 0 && !esBot.room.usercommand) return void (0);
                         if(!esBot.room.allcommand) return void (0);
-                    }                            
+                    }
                     if(chat.message === '!eta' && esBot.roomSettings.etaRestriction){
                         if(userPerm < 2){
                             var u = esBot.userUtilities.lookupUser(chat.fromID);
@@ -760,8 +755,8 @@
                             }
                             else u.lastEta = Date.now();
                         }
-                    }                            
-                    var executed = false;                            
+                    }
+                    var executed = false;
                     switch(cmd){
                         case '!active':             esBot.commands.activeCommand.functionality(chat, '!active');                        executed = true; break;
                         case '!add':                esBot.commands.addCommand.functionality(chat, '!add');                              executed = true; break;
@@ -815,7 +810,7 @@
                         case '!sessionstats':       esBot.commands.sessionstatsCommand.functionality(chat, '!sessionstats');            executed = true; break;
                         case '!status':             esBot.commands.statusCommand.functionality(chat, '!status');                        executed = true; break;
                         case '!steam':              esBot.commands.steamCommand.functionality(chat, '!steam');                          executed = true; break;
-                        case '!stream':             esBot.commands.streamCommand.functionality(chat, '!stream');                        executed = true; break;                        
+                        case '!stream':             esBot.commands.streamCommand.functionality(chat, '!stream');                        executed = true; break;
                         case '!suggest':            esBot.commands.suggestCommand.functionality(chat, '!suggest');                      executed = true; break;
                         case '!source':             esBot.commands.sourceCommand.functionality(chat, '!source');                        executed = true; break;
                         case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
@@ -839,26 +834,26 @@
                     }
                     if(executed && userPerm === 0){
                         esBot.room.usercommand = false;
-                        setTimeout(function(){ esBot.room.usercommand = true; }, esBot.roomSettings.commandCooldown * 1000);                               
+                        setTimeout(function(){ esBot.room.usercommand = true; }, esBot.roomSettings.commandCooldown * 1000);
                     }
                     if(executed){
                         API.moderateDeleteChat(chat.chatID);
                         esBot.room.allcommand = false;
                         setTimeout(function(){ esBot.room.allcommand = true; }, 5 * 1000);
                     }
-                    return executed;                                
-                },                        
+                    return executed;
+                },
                 action: function(chat){
-                    var user = esBot.userUtilities.lookupUser(chat.fromID);                        
+                    var user = esBot.userUtilities.lookupUser(chat.fromID);
                     if (chat.type === 'message') {
                         for(var j = 0; j < esBot.room.users.length;j++){
                             if(esBot.userUtilities.getUser(esBot.room.users[j]).id === chat.fromID){
                                 esBot.userUtilities.setLastActivity(esBot.room.users[j]);
                             }
-                        
+
                         }
                     }
-                    esBot.room.roomstats.chatmessages++;                                
+                    esBot.room.roomstats.chatmessages++;
                 },
                 spam: [
                     'hueh','hu3','brbr','heu','kkkk','zuera','zueira',
@@ -868,7 +863,7 @@
                 ],
                 curses: [
                     'nigger', 'faggot', 'nigga', 'niqqa','motherfucker','modafocka','fag','fuck','feck','fack','bitch','cunt'
-                ],                        
+                ],
                 beggarSentences: ['fanme','funme','becomemyfan','trocofa','fanforfan','fan4fan','fan4fan','hazcanfanz','fun4fun','fun4fun',
                     'meufa','fanz','isnowyourfan','fansme','givefan','fanplz','fanpls','plsfan','plzfan','becomefan','tradefan',
                     'fanifan','bemyfan','retribui','gimmefan','fansatfan','fansplz','fanspls','ifansback','fanforfan','addmefan','retribuo',
@@ -931,7 +926,7 @@
                         eventChatcommand:                               $.proxy(this.eventChatcommand,                              this),
                         eventHistoryupdate:                             $.proxy(this.eventHistoryupdate,                            this),
 
-                };            
+                };
                 API.on(API.CHAT,                                        this.proxy.eventChat);
                 API.on(API.USER_SKIP,                                   this.proxy.eventUserskip);
                 API.on(API.USER_JOIN,                                   this.proxy.eventUserjoin);
@@ -950,7 +945,7 @@
                 API.on(API.CHAT_COMMAND,                                this.proxy.eventChatcommand);
                 API.on(API.HISTORY_UPDATE,                              this.proxy.eventHistoryupdate);
             },
-            disconnectAPI:function(){                        
+            disconnectAPI:function(){
                 API.off(API.CHAT,                                        this.proxy.eventChat);
                 API.off(API.USER_SKIP,                                   this.proxy.eventUserskip);
                 API.off(API.USER_JOIN,                                   this.proxy.eventUserjoin);
@@ -979,7 +974,7 @@
                 }
                 for(var j = 0; j < esBot.room.users.length; j++){
                     esBot.room.users[j].inRoom = false;
-                }                        
+                }
                 var userlist = API.getUsers();
                 for(var i = 0; i < userlist.length;i++){
                     var known = false;
@@ -1002,13 +997,13 @@
                 }
                 esBot.room.afkInterval = setInterval(function(){esBot.roomUtilities.afkCheck()}, 10 * 1000);
                 esBot.room.autodisableInterval = setInterval(function(){esBot.room.autodisableFunc();}, 60 * 60 * 1000);
-                esBot.loggedInID = API.getUser().id;            
+                esBot.loggedInID = API.getUser().id;
                 esBot.status = true;
                 API.sendChat('/cap 1');
                 API.setVolume(0);
                 API.sendChat('/me ' + esBot.name + ' v' + esBot.version + ' online!');
-            },                        
-            commands: {        
+            },
+            commands: {
                 executable: function(minRank, chat){
                     var id = chat.fromID;
                     var perm = esBot.userUtilities.getPermission(id);
@@ -1019,7 +1014,7 @@
                             case 'host': minPerm = 5; break;
                             case 'cohost': minPerm = 4; break;
                             case 'manager': minPerm = 3; break;
-                            case 'mod': 
+                            case 'mod':
                                     if(esBot.roomSettings.bouncerPlus){
                                         minPerm = 2;
                                     }
@@ -1035,8 +1030,8 @@
                     if(perm >= minPerm){
                     return true;
                     }
-                    else return false;                      
-                },                
+                    else return false;
+                },
                      /**
                     commandCommand: {
                             rank: 'user/bouncer/mod/manager',
@@ -1045,10 +1040,10 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                    
-                                    };                              
+
+                                    };
                             },
-                    },          
+                    },
                     **/
 
                     activeCommand: {
@@ -1074,7 +1069,7 @@
                                             }
                                         }
                                         API.sendChat('/me [@' + chat.from + '] There have been ' + chatters + ' users chatting in the past ' + time + ' minutes.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1087,7 +1082,7 @@
                                     else{
                                         var msg = chat.message;
                                         if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No user specified.');
-                                        var name = msg.substr(cmd.length + 2);   
+                                        var name = msg.substr(cmd.length + 2);
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if (msg.length > cmd.length + 2) {
                                             if (typeof user !== 'undefined') {
@@ -1097,7 +1092,7 @@
                                                 esBot.userUtilities.moveUser(user.id, 0, false);
                                             } else API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                           }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1116,7 +1111,7 @@
                                             API.sendChat('/me [@' + chat.from + '] Maximum afk duration set to ' + esBot.roomSettings.maximumAfk + ' minutes.');
                                         }
                                         else API.sendChat('/me [@' + chat.from + '] Invalid limit.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1137,7 +1132,7 @@
                                             esBot.room.afkInterval = setInterval(function(){esBot.roomUtilities.afkCheck()}, 2 * 1000);
                                             API.sendChat('/me [@' + chat.from + '] Turned afk removal on.');
                                           }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1155,7 +1150,7 @@
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                         esBot.userUtilities.setLastActivity(user);
                                         API.sendChat('/me [@' + chat.from + '] Reset the afk status of @' + name + '.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1165,7 +1160,7 @@
                             functionality: function(chat, cmd){
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
-                                    else{                                    
+                                    else{
                                         var msg = chat.message;
                                         if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No user specified.');
                                         var name = msg.substring(cmd.length + 2);
@@ -1175,10 +1170,10 @@
                                         var inactivity = Date.now() - lastActive;
                                         var time = esBot.roomUtilities.msToStr(inactivity);
                                         API.sendChat('/me [@' + chat.from + '] @' + name + ' has been inactive for ' + time + '.');
-                                    };                              
+                                    };
                             },
                     },
-                    
+
                     autoskipCommand: {
                             rank: 'mod',
                             type: 'exact',
@@ -1195,7 +1190,7 @@
                                             esBot.roomSettings.autoskip = !esBot.roomSettings.autoskip;
                                             return API.sendChat('/me [@' + chat.from + '] Autoskip enabled.');
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1207,7 +1202,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me We recommend PlugCubed for autowooting: http://plugcubed.net/")
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1219,7 +1214,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me A Brand Ambassador is the voice of the plug.dj users. They promote events, engage the community and share the plug.dj message around the world. For more info: http://blog.plug.dj/brand-ambassadors/");
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1237,10 +1232,10 @@
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                         //API.sendChat('/me [' + chat.from + ' whips out the banhammer :hammer:]');
                                         API.moderateBanUser(user.id, 5, API.BAN.PERMA);
-                                    };                              
+                                    };
                             },
                     },
-                    
+
 
                     bouncerPlusCommand: {
                             rank: 'mod',
@@ -1254,7 +1249,7 @@
                                             esBot.roomSettings.bouncerPlus = false;
                                             return API.sendChat('/me [@' + chat.from + '] Bouncer+ is now off.');
                                             }
-                                        else{ 
+                                        else{
                                             if(!esBot.roomSettings.bouncerPlus){
                                                 var id = chat.fromID;
                                                 var perm = esBot.userUtilities.getPermission(id);
@@ -1265,11 +1260,11 @@
                                             }
                                             else return API.sendChat('/me [@' + chat.from + '] You have to be manager or up to enable Bouncer+.');
                                         };
-                                    };                              
+                                    };
                             },
                     },
 
-                    
+
                     clearchatCommand: {
                             rank: 'manager',
                             type: 'exact',
@@ -1277,16 +1272,16 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                        var currentchat = $('#chat-messages').children();       
+                                        var currentchat = $('#chat-messages').children();
                                         for (var i = 0; i < currentchat.length; i++) {
                                             for (var j = 0; j < currentchat[i].classList.length; j++) {
-                                                if (currentchat[i].classList[j].indexOf('cid-') == 0) 
+                                                if (currentchat[i].classList[j].indexOf('cid-') == 0)
                                                     API.moderateDeleteChat(currentchat[i].classList[j].substr(4));
                                             }
-                                        }                                 
+                                        }
                                     return API.sendChat('/me [@' + chat.from + '] Cleared the chat.');
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -1298,7 +1293,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me "+ esBot.name + " commands: " + esBot.cmdLink);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1338,9 +1333,9 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         var msg = chat.message;
-          
+
                                         var space = msg.indexOf(' ');
-                                        if(space === -1){ 
+                                        if(space === -1){
                                             API.sendChat('/em eats a cookie.');
                                             return false;
                                         }
@@ -1349,7 +1344,7 @@
                                             var user = esBot.userUtilities.lookupUserName(name);
                                             if (user === false || !user.inRoom) {
                                               return API.sendChat("/em doesn't see '" + name + "' in the room and eats a cookie himself.");
-                                            } 
+                                            }
                                             else if(user.username === chat.from){
                                                 return API.sendChat("/me @" + name +  ", you're a bit greedy, aren't you? Giving cookies to yourself, bah. Share some with other people!")
                                             }
@@ -1357,8 +1352,8 @@
                                                 return API.sendChat("/me @" + user.username + ", @" + chat.from + ' ' + this.getCookie() );
                                             }
                                         }
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -1370,7 +1365,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         esBot.roomUtilities.changeDJCycle();
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1389,8 +1384,8 @@
                                             esBot.roomSettings.cycleGuard = !esBot.roomSettings.cycleGuard;
                                             return API.sendChat('/me [@' + chat.from + '] Cycleguard enabled.');
                                         }
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -1408,8 +1403,8 @@
                                             return API.sendChat('/me [@' + chat.from + '] The cycleguard is set to ' + esBot.roomSettings.maximumCycletime + ' minute(s).');
                                         }
                                         else return API.sendChat('/me [@' + chat.from + '] No correct time specified for the cycleguard.');
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -1423,17 +1418,17 @@
                                         var msg = chat.message;
                                         var name;
                                         if(msg.length === cmd.length) name = chat.from;
-                                        else{ 
+                                        else{
                                             name = msg.substring(cmd.length + 2);
                                             var perm = esBot.userUtilities.getPermission(chat.fromID);
                                             if(perm < 2) return API.sendChat('/me [@' + chat.from + '] Only bouncers and above can do !dclookup for others.');
-                                        }    
+                                        }
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                         var id = user.id;
                                         var toChat = esBot.userUtilities.dclookup(id);
                                         API.sendChat(toChat);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1445,7 +1440,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat('/me Emoji list: http://www.emoji-cheat-sheet.com/');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1473,11 +1468,11 @@
                                             case 'pt': ch += 'Por favor, fale Inglês.'; break;
                                             case 'sk': ch += 'Hovorte po anglicky, prosím.'; break;
                                             case 'cs': ch += 'Mluvte prosím anglicky.'; break;
-                                            case 'sr': ch += 'Молим Вас, говорите енглески.'; break;                                  
+                                            case 'sr': ch += 'Молим Вас, говорите енглески.'; break;
                                         }
                                         ch += ' English please.';
                                         API.sendChat(ch);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1502,8 +1497,8 @@
                                         var timeRemaining = API.getTimeRemaining();
                                         var estimateMS = ((pos+1) * 4 * 60 + timeRemaining) * 1000;
                                         var estimateString = esBot.roomUtilities.msToStr(estimateMS);
-                                        API.sendChat('/me @' + name + ' you will reach the booth in approximately ' + estimateString + '.');                       
-                                    };                              
+                                        API.sendChat('/me @' + name + ' you will reach the booth in approximately ' + estimateString + '.');
+                                    };
                             },
                     },
 
@@ -1521,13 +1516,26 @@
                                         else{
                                             esBot.roomSettings.filterChat = !esBot.roomSettings.filterChat;
                                             return API.sendChat('/me [@' + chat.from + '] chatfilter enabled.');
-                                        } 
-                                    
-                                    };                              
+                                        }
+
+                                    };
                             },
                     },
-                
-                
+
+                    forumsCommand: {
+                            rank: 'user',
+                            type: 'exact',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        if(typeof esBot.roomSettings.website === "string")
+                                            API.sendChat('/me Check out our forums!: ' + esBot.roomSettings.website);
+                                    };
+                            },
+                    },
+
+
                  hiCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -1536,7 +1544,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me [@" + chat.from + "] Hi there!")
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1551,7 +1559,7 @@
                                             esBot.room.roulette.participants.push(chat.fromID);
                                             API.sendChat("/me @" + chat.from + " joined the roulette! (!leave if you regret it.)");
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1571,7 +1579,7 @@
                                         var time = Date.now() - join;
                                         var timeString = esBot.roomUtilities.msToStr(time);
                                         API.sendChat('/me [@' + chat.from + '] @' + name + ' has been in the room for ' + timeString + '.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1589,12 +1597,12 @@
                                         if(lastSpace === msg.indexOf(' ')){
                                             time = 0.25;
                                             name = msg.substring(cmd.length + 2);
-                                            }    
+                                            }
                                         else{
                                             time = msg.substring(lastSpace + 1);
                                             name = msg.substring(cmd.length + 2, lastSpace);
                                         }
-                                        
+
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         var from = chat.from;
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] No valid user specified.');
@@ -1611,15 +1619,15 @@
 
                                             if(time > 24*60*60) API.moderateBanUser(user.id, 1 , API.BAN.PERMA);
                                                 else API.moderateBanUser(user.id, 1, API.BAN.DAY);
-                                            setTimeout(function(id, name){ 
-                                                API.moderateUnbanUser(id); 
-                                                console.log('Unbanned @' + name + '.'); 
+                                            setTimeout(function(id, name){
+                                                API.moderateUnbanUser(id);
+                                                console.log('Unbanned @' + name + '.');
                                                 }, time * 60 * 1000, user.id, name);
-                                            
+
                                         }
 
-                                        else API.sendChat('/me [@' + chat.from + '] No valid time (minutes) specified.');                                   
-                                    };                              
+                                        else API.sendChat('/me [@' + chat.from + '] No valid time (minutes) specified.');
+                                    };
                             },
                     },
 
@@ -1634,7 +1642,7 @@
                                         API.sendChat('/me Shutting down.');
                                         esBot.disconnectAPI();
                                         setTimeout(function(){kill();},1000);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1650,7 +1658,7 @@
                                             esBot.room.roulette.participants.splice(ind, 1);
                                             API.sendChat("/me @" + chat.from + " left the roulette!");
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1661,9 +1669,9 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                            return API.sendChat("/me Let's Music is a stream where Sam and Andrew of Approaching Nirvana stream making music. When live, they can be viewed here: http://twitch.tv/approachingnirvana"); 
+                                            return API.sendChat("/me Let's Music is a stream where Sam and Andrew of Approaching Nirvana stream making music. When live, they can be viewed here: http://twitch.tv/approachingnirvana");
 
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1690,11 +1698,11 @@
                                             if(media.format === '2'){
                                                 var SCsource = '/tracks/' + media.cid;
                                                 SC.get('/tracks/' + media.cid, function(sound){API.sendChat('/me [' + from + '] Link to current song: ' + sound.permalink_url);});
-                                            }   
-                                        }                    
-                                    
-                                    
-                                    };                              
+                                            }
+                                        }
+
+
+                                    };
                             },
                     },
 
@@ -1706,7 +1714,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         esBot.roomUtilities.booth.lockBooth();
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1723,8 +1731,8 @@
                                             return API.sendChat("/me [@" + chat.from + "] Lockdown enabled. Only staff can chat now.");
                                         }
                                         else return API.sendChat('/me [@' + chat.from + '] Lockdown disabled.');
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -1742,9 +1750,9 @@
                                         else{
                                             esBot.roomSettings.lockGuard = !esBot.roomSettings.lockGuard;
                                             return API.sendChat('/me [@' + chat.from + '] Lockguard enabled.');
-                                        } 
-                                    
-                                    };                              
+                                        }
+
+                                    };
                             },
                     },
 
@@ -1773,7 +1781,7 @@
                                                     setTimeout(function(id){
                                                     esBot.room.skippable = false;
                                                         //esBot.roomUtilities.changeDJCycle();
-                                                        
+
                                                     },1500, id);
                                                 }, 1000, id);
 
@@ -1782,7 +1790,7 @@
                                             }
                                             var validReason = false;
                                             var msg = chat.message;
-                                            var reason = msg.substring(cmd.length + 1);       
+                                            var reason = msg.substring(cmd.length + 1);
                                             for(var i = 0; i < esBot.roomSettings.skipReasons.length; i++){
                                                 var r = esBot.roomSettings.skipReasons[i][0];
                                                 if(reason.indexOf(r) !== -1){
@@ -1799,15 +1807,15 @@
                                                     esBot.room.skippable = true;
                                                     setTimeout(function(id){
                                                         //esBot.roomUtilities.changeDJCycle();
-                                                        
+
                                                     },1500, id);
                                                 }, 1000, id);
 
                                                 return void (0);
                                             }
-                                                                                    
+
                                         }
-                                    }                              
+                                    }
                             },
                     },
 
@@ -1826,7 +1834,7 @@
                                             return API.sendChat('/me [@' + chat.from + '] The lockguard is set to ' + esBot.roomSettings.maximumLocktime + ' minute(s).');
                                         }
                                         else return API.sendChat('/me [@' + chat.from + '] No correct time specified for the lockguard.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1844,7 +1852,7 @@
                                             return API.sendChat('/me [@' + chat.from + '] The maximum song duration is set to ' + esBot.roomSettings.maximumSongLength + ' minutes.');
                                         }
                                         else return API.sendChat('/me [@' + chat.from + '] No correct duration specified.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1867,7 +1875,7 @@
                                             esBot.roomSettings.motdInterval = argument;
                                             API.sendChat('/me MotD interval set to ' + esBot.roomSettings.motdInterval + '.');
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1898,9 +1906,9 @@
                                         if(user.id === esBot.loggedInID) return API.sendChat('/me [@' + chat.from + '] Don\'t try to add me to the waitlist, please.');
                                         if (!isNaN(pos)) {
                                             API.sendChat('/me [' + chat.from + ' used move.]');
-                                            esBot.userUtilities.moveUser(user.id, pos, false); 
+                                            esBot.userUtilities.moveUser(user.id, pos, false);
                                         } else return API.sendChat('/me [@' + chat.from + '] Invalid position specified.');
-                                    };                           
+                                    };
                             },
                     },
 
@@ -1918,7 +1926,7 @@
                                         var name;
                                         if(lastSpace === msg.indexOf(' ')){
                                             name = msg.substring(cmd.length + 2);
-                                            }    
+                                            }
                                         else{
                                             time = msg.substring(lastSpace + 1);
                                             if(isNaN(time)){
@@ -1953,10 +1961,10 @@
                                                         API.sendChat('/me [@' + chat.from + '] Unmuted @' + name + '.');
                                                     }
                                                 }, time * 60 * 1000, user.id);
-                                            } 
+                                            }
                                         }
                                         else API.sendChat("/me [@" + chat.from + "] You can't mute persons with an equal or higher rank than you.");
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1969,12 +1977,12 @@
                                     else{
                                         if(typeof esBot.roomSettings.opLink === "string")
                                             return API.sendChat("/me OP list: " + esBot.roomSettings.opLink);
-                                        
-                                    };                              
+
+                                    };
                             },
                     },
-                
-                    
+
+
                     p3Command: {
                             rank: 'user',
                             type: 'exact',
@@ -1983,7 +1991,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat('/me plugCubed is a nice tool you can use with plug.dj. It features autowoot, private messages, and more! Check it out: http://plugcubed.net')
-                                    };                              
+                                    };
                             },
                     },
 
@@ -1995,7 +2003,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me [@" + chat.from + "] Pong!")
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2011,8 +2019,8 @@
                                         setTimeout(function(){
                                         window.location.reload(false);
                                             },1000);
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2027,7 +2035,7 @@
                                         esBot.disconnectAPI();
                                         kill();
                                         setTimeout(function(){$.getScript(esBot.scriptLink);},2000);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2048,11 +2056,11 @@
                                                     position: null,
                                                     songCount: 0,
                                                 };
-                                                API.moderateRemoveDJ(user.id);                                          
+                                                API.moderateRemoveDJ(user.id);
                                             } else API.sendChat("/me [@" + chat.from + "] Specified user @" + name + " is not in the waitlist.");
                                           } else API.sendChat("/me [@" + chat.from + "] No user specified.");
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2070,9 +2078,9 @@
                                         else{
                                             esBot.roomSettings.etaRestriction = !esBot.roomSettings.etaRestriction;
                                             return API.sendChat('/me [@' + chat.from + '] eta restricted.');
-                                        } 
-                                    
-                                    };                              
+                                        }
+
+                                    };
                             },
                     },
 
@@ -2086,7 +2094,7 @@
                                         if(!esBot.room.roulette.rouletteStatus){
                                             esBot.room.roulette.startRoulette();
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2098,8 +2106,8 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         if(typeof esBot.roomSettings.rulesLink === "string")
-                                            return API.sendChat("/me Please find the room rules here: " + esBot.roomSettings.rulesLink);                                
-                                    };                              
+                                            return API.sendChat("/me Please find the room rules here: " + esBot.roomSettings.rulesLink);
+                                    };
                             },
                     },
 
@@ -2115,11 +2123,11 @@
                                         var mehs = esBot.room.roomstats.totalMehs;
                                         var grabs = esBot.room.roomstats.totalCurates;
                                         API.sendChat('/me [@' + from + '] Total woots: ' + woots + ', total mehs: ' + mehs + ', total grabs: ' + grabs + '.');
-                                    };                              
+                                    };
                             },
                     },
 
-                
+
 
                     sourceCommand: {
                             rank: 'user',
@@ -2129,7 +2137,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat('/me This bot is maintaned by ' + esBot.creator + ', but base code is by EuclideanSpace. The code for this bot is located here: https://github.com/trevinwoodstock/PandaBot ');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2142,14 +2150,14 @@
                                     else{
                                         var from = chat.from
                                         var msg = '/me [@' + from + '] ';
-                                          
+
                                         msg += 'AFK removal: ';
                                         if(esBot.roomSettings.afkRemoval) msg += 'ON';
                                         else msg += 'OFF';
                                         msg += '. ';
                                         msg += "AFK's removed: " + esBot.room.afkList.length + '. ';
                                         msg += 'AFK limit: ' + esBot.roomSettings.maximumAfk + '. ';
-                                         
+
                                         msg+= 'Bouncer+: '
                                         if(esBot.roomSettings.bouncerPlus) msg += 'ON';
                                         else msg += 'OFF';
@@ -2179,9 +2187,9 @@
                                         var durationOnline = Date.now() - launchT;
                                         var since = esBot.roomUtilities.msToStr(durationOnline);
                                         msg += 'I have been active for ' + since + '. ';
-                                          
+
                                          return API.sendChat(msg);
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2193,11 +2201,11 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                            return API.sendChat("/me Join our Steam Community!: http://steamcommunity.com/groups/ApproachNirvana");                                
-                                    };                              
+                                            return API.sendChat("/me Join our Steam Community!: http://steamcommunity.com/groups/ApproachNirvana");
+                                    };
                             },
                     },
-                    
+
                     steamCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2205,11 +2213,11 @@
                                     if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
-                                            return API.sendChat("/me Approaching Nirvana stream a DJ set on each Friday at 5pm EST. To see what time that is for you, visit: http://everytimezone.com/#2014-5-9,540,6bj come! http://approachingnirvana.com/live ");                                
-                                    };                              
+                                            return API.sendChat("/me Approaching Nirvana stream a DJ set on each Friday at 5pm EST. To see what time that is for you, visit: http://everytimezone.com/#2014-5-9,540,6bj come! http://approachingnirvana.com/live ");
+                                    };
                             },
                     },
-                            
+
                     suggestCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2218,7 +2226,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat('/me If you have a suggestion for PandaBot, please fill out the form here: http://plug.trevin.me/suggest ')
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2234,8 +2242,8 @@
                                     else{
                                         if(typeof esBot.roomSettings.themeLink === "string")
                                             API.sendChat("/me Please find the permissible room genres here: " + esBot.roomSettings.themeLink);
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2253,9 +2261,9 @@
                                         else{
                                             esBot.roomSettings.timeGuard = !esBot.roomSettings.timeGuard;
                                             return API.sendChat('/me [@' + chat.from + '] Timeguard enabled.');
-                                        } 
-                                    
-                                    };                              
+                                        }
+
+                                    };
                             },
                     },
 
@@ -2274,10 +2282,10 @@
                                             esBot.roomSettings.motdEnabled = !esBot.roomSettings.motdEnabled;
                                             API.sendChat('/me MotD enabled.');
                                         }
-                                    };                              
+                                    };
                             },
                     },
-                    
+
                 tsCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2286,11 +2294,11 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                             return API.sendChat("/me We have an unofficial Approaching Nirvana TeamSpeak server!  For connection info: http://community.approachingnirvana.com/forum/thread-800.html");
-                                        
-                                    };                              
+
+                                    };
                             },
                     },
-                
+
                 tutorialCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2299,12 +2307,12 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                             return API.sendChat("/me If you're new to plug.dj, check out this tutorial by our own manager, Geolu_Henge: http://community.approachingnirvana.com/forum/thread-856.html ");
-                                        
-                                    };                              
+
+                                    };
                             },
                     },
-                
-                
+
+
                   twitchCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2313,11 +2321,11 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                             return API.sendChat("/me Approaching Nirvana stream Let's Music and play games on their Twitch! Follow to be notified: http://twitch.tv/approachingnirvana");
-                                        
-                                    };                              
+
+                                    };
                             },
                     },
-                  
+
 
                     unbanCommand: {
                             rank: 'bouncer',
@@ -2343,16 +2351,16 @@
                                           }
                                         if(!found){
                                             $(".icon-chat").click();
-                                            return API.sendChat('/me [@' + chat.from + '] The user was not banned.');  
-                                        }                                
+                                            return API.sendChat('/me [@' + chat.from + '] The user was not banned.');
+                                        }
                                         API.moderateUnbanUser(user.id);
                                         console.log("Unbanned " + name);
                                         setTimeout(function(){
                                             $(".icon-chat").click();
                                         },1000);
                                     },1000,chat);
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2364,7 +2372,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         esBot.roomUtilities.booth.unlockBooth();
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2377,7 +2385,7 @@
                                     else{
                                         var msg = chat.message;
                                         var permFrom = esBot.userUtilities.getPermission(chat.fromID);
-                                          
+
                                         if(msg.indexOf('@') === -1 && msg.indexOf('all') !== -1){
                                             if(permFrom > 2){
                                                 esBot.room.mutedUsers = [];
@@ -2385,14 +2393,14 @@
                                             }
                                             else return API.sendChat('/me [@' + chat.from + '] Only managers and up can unmute everyone at once.')
                                         }
-                                          
+
                                         var from = chat.from;
                                         var name = msg.substr(cmd.length + 2);
 
                                         var user = esBot.userUtilities.lookupUserName(name);
-                                          
+
                                         if(typeof user === 'boolean') return API.sendChat("/me Invalid user specified.");
-                                        
+
                                         var permUser = esBot.userUtilities.getPermission(user.id);
                                         if(permFrom > permUser){
 
@@ -2411,8 +2419,8 @@
                                             API.sendChat('/me [@' + chat.from + '] Unmuted @' + name + '.');
                                         }
                                         else API.sendChat("/me [@" + chat.from + "] You can't unmute persons with an equal or higher rank than you.");
-                                        
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2430,8 +2438,8 @@
                                             return API.sendChat('/me [@' + chat.from + '] The cooldown for commands by users is now set to ' + esBot.roomSettings.commandCooldown + ' seconds.');
                                         }
                                         else return API.sendChat('/me [@' + chat.from + '] No correct cooldown specified.');
-                                    
-                                    };                              
+
+                                    };
                             },
                     },
 
@@ -2450,7 +2458,7 @@
                                             API.sendChat('/me [@' + chat.from + '] Usercommands enabled.');
                                             esBot.roomSettings.usercommandsEnabled = !esBot.roomSettings.usercommandsEnabled;
                                         }
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2467,12 +2475,12 @@
                                         if(typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
                                         var lang = esBot.userUtilities.getUser(user).language;
                                         var ch = '/me @' + name + ' ';
-                                        ch += ' Please change your username as breaks one or multiple of the following rules: all capitals, sentences, offensive/racist language or symbols.';
+                                        ch += ' Please change your username as breaks one or more of the following rules: all capitals, sentences, offensive/racist language or symbols.';
                                         API.sendChat(ch);
-                                    };                              
+                                    };
                             },
                     },
-                    
+
                     versionCommand: {
                             rank: 'user',
                             type: 'exact',
@@ -2481,7 +2489,7 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me" + esBot.name + " is currently running v" + esBot.version + "." )
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2500,7 +2508,7 @@
                                         var vratio = user.votes;
                                         var ratio = vratio.woot / vratio.meh;
                                         API.sendChat('/me [@' + chat.from + '] @' + name + ' ~ woots: ' + vratio.woot + ', mehs: ' + vratio.meh + ', ratio (w/m): ' + ratio.toFixed(2) + '.');
-                                    };                              
+                                    };
                             },
                     },
 
@@ -2518,31 +2526,18 @@
                                         else{
                                             esBot.roomSettings.welcome = !esBot.roomSettings.welcome;
                                             return API.sendChat('/me [@' + chat.from + '] welcome message enabled.');
-                                        } 
-                                    
-                                    };                              
+                                        }
+
+                                    };
                             },
                     },
 
-                    forumsCommand: {
-                            rank: 'user',
-                            type: 'exact',
-                            functionality: function(chat, cmd){
-                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
-                                    else{
-                                        if(typeof esBot.roomSettings.website === "string")
-                                            API.sendChat('/me Check out our forums!: ' + esBot.roomSettings.website);
-                                    };                              
-                            },
-                    },
-                    
             },
-                    
+
     };
 
 
 
 
-    esBot.startup(); 
+    esBot.startup();
     }).call(this);
