@@ -81,7 +81,7 @@
     };
 
     var esBot = {
-            version: "1.2.1",
+            version: "1.2.2",
             status: false,
             name: "PandaBot",
             creator: "trevinwoodstock",
