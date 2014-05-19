@@ -776,11 +776,13 @@
                         case '!cycle':              esBot.commands.cycleCommand.functionality(chat, '!cycle');                          executed = true; break;
                         case '!cycleguard':         esBot.commands.cycleguardCommand.functionality(chat, '!cycleguard');                executed = true; break;
                         case '!cycletimer':         esBot.commands.cycletimerCommand.functionality(chat, '!cycletimer');                executed = true; break;
-                        case '!dclookup':           esBot.commands.dclookupCommand.functionality(chat, '!dclookup');                    executed = true; break;
+                        case '!dban':               esBot.commands.dbanCommand.functionality(chat, '!dban');                            executed = true; break;                        
+						case '!dclookup':           esBot.commands.dclookupCommand.functionality(chat, '!dclookup');                    executed = true; break;
                         case '!emoji':              esBot.commands.emojiCommand.functionality(chat, '!emoji');                          executed = true; break;
                         case '!english':            esBot.commands.englishCommand.functionality(chat, '!english');                      executed = true; break;
                         case '!eta':                esBot.commands.etaCommand.functionality(chat, '!eta');                              executed = true; break;
                         case '!filter':             esBot.commands.filterCommand.functionality(chat, '!filter');                        executed = true; break;
+                        case '!hban':               esBot.commands.hbanCommand.functionality(chat, '!hban');                            executed = true; break;
                         case '!hi':                 esBot.commands.hiCommand.functionality(chat, '!hi');                                executed = true; break;
                         case '!join':               esBot.commands.joinCommand.functionality(chat, '!join');                            executed = true; break;
                         case '!jointime':           esBot.commands.jointimeCommand.functionality(chat, '!jointime');                    executed = true; break;
@@ -1408,6 +1410,24 @@
                             },
                     },
 
+					dbanCommand: {
+                            rank: 'bouncer',
+                            type: 'startsWith',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        var msg = chat.message;
+                                        if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No valid user specified.');
+                                        var name = msg.substr(cmd.length + 2);
+                                        var user = esBot.userUtilities.lookupUserName(name);
+                                        if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
+                                        //API.sendChat('/me [' + chat.from + ' ] Performing day ban...');
+                                        API.moderateBanUser(user.id, 5, API.BAN.DAY);
+                                    };
+                            },
+                    },
+					
                     dclookupCommand: {
                             rank: 'bouncer',
                             type: 'startsWith',
@@ -1536,7 +1556,7 @@
                     },
 
 
-                 hiCommand: {
+					hiCommand: {
                             rank: 'user',
                             type: 'exact',
                             functionality: function(chat, cmd){
@@ -1544,6 +1564,24 @@
                                     if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                     else{
                                         API.sendChat("/me [@" + chat.from + "] Hi there!")
+                                    };
+                            },
+                    },
+					
+					hbanCommand: {
+                            rank: 'bouncer',
+                            type: 'startsWith',
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        var msg = chat.message;
+                                        if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No valid user specified.');
+                                        var name = msg.substr(cmd.length + 2);
+                                        var user = esBot.userUtilities.lookupUserName(name);
+                                        if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
+                                        //API.sendChat('/me [' + chat.from + ' ] Performing hour ban...');
+                                        API.moderateBanUser(user.id, 5, API.BAN.HOUR);
                                     };
                             },
                     },
