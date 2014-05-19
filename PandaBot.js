@@ -81,7 +81,7 @@
     };
 
     var esBot = {
-            version: "1.2.2",
+            version: "1.2.2.1",
             status: false,
             name: "PandaBot",
             creator: "trevinwoodstock",
@@ -1422,7 +1422,7 @@
                                         var name = msg.substr(cmd.length + 2);
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
-                                        //API.sendChat('/me [' + chat.from + ' ] Performing day ban...');
+                                        API.sendChat('/me [' + chat.from + ' ] Performing day ban...');
                                         API.moderateBanUser(user.id, 5, API.BAN.DAY);
                                     };
                             },
@@ -1580,7 +1580,7 @@
                                         var name = msg.substr(cmd.length + 2);
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
-                                        //API.sendChat('/me [' + chat.from + ' ] Performing hour ban...');
+                                        API.sendChat('/me [' + chat.from + ' ] Performing hour ban...');
                                         API.moderateBanUser(user.id, 5, API.BAN.HOUR);
                                     };
                             },
