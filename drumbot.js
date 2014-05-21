@@ -86,7 +86,7 @@
             name: "DrumBot",
             creator: "XDdrummer",
             loggedInID: null,
-            scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/PandaBot/master/PandaBot.js",
+            scriptLink: "https://rawgit.com/XDdrummer/DrumBot/master/drumbot.js",
             cmdLink: "https://github.com/Yemasthui/basicBot/blob/master/commands.md",
             roomSettings: {
                 maximumAfk: 120,
