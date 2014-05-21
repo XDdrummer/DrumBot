@@ -81,13 +81,13 @@
     };
 
     var esBot = {
-            version: "1.2.2.1",
+            version: "1.0",
             status: false,
-            name: "PandaBot",
-            creator: "trevinwoodstock",
+            name: "DrumBot",
+            creator: "XDdrummer",
             loggedInID: null,
             scriptLink: "https://raw.githubusercontent.com/trevinwoodstock/PandaBot/master/PandaBot.js",
-            cmdLink: "http://plug.trevin.me/bot",
+            cmdLink: "https://github.com/Yemasthui/basicBot/blob/master/commands.md",
             roomSettings: {
                 maximumAfk: 120,
                 afkRemoval: true,
