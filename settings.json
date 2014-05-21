@@ -21,7 +21,8 @@
             ["sound", "The song you played had bad sound quality or no sound. "],
             ["nsfw", "The song you contained was NSFW/PG13/inappropriate (image or sound). "], 
             ["mehs", "The song you played had more mehs than woots."],
-            ["unavailable", "The song you played was not available for some users. "] 
+            ["unavailable", "The song you played was not available for some users. "], 
+            ["asshole", "I felt like being an asshole, so I skipped your song."]
         ],
     "afkpositionCheck": 15,
     "afkRankCheck": "ambassador",                
@@ -36,7 +37,7 @@
     "themeLink": "http://community.approachingnirvana.com/forum/index.php",
     "fbLink": null,
     "youtubeLink": null,
-    "website": null,
-    "intervalMessages": ["Reminder: Please ask before linking.","Please make sure to follow the rules! http://community.approachingnirvana.com/forum/thread-8.html","Our own manager, Geolu_Henge, wrote a tutorial for plug.dj. Check it out!: http://community.approachingnirvana.com/forum/thread-856.html","Join our forums! http://community.approachingnirvana.com"],,
+    "website": "http://www.mc-z.net/",
+    "intervalMessages": ["Reminder: Please ask before linking.","Join our forums! http://www.mc-z.net"],
     "messageInterval": 9
 }
