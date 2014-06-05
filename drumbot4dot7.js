@@ -1307,7 +1307,10 @@
                             cookies: ['throws a cookie at you. That fucking hurt!',
                                       'tries to give you a cookie, but accidentally gvies you posion.',
                                       'stole your moms fresh baked cookies, stuffed them up their ass, then tried to give them to you.',
-                                      'gave you a cookie. Too bad they suck at baking.'
+                                      'gave you a cookie. Too bad they suck at baking.',
+                                      'gives you a solid, dry cookie. Fuck that.',
+                                      'hides a knife in the cookie then gives it to you, but who could blame them? No one likes you.',
+                                      'sings a song to you while you die of poison. Why did you eat that cookie, man???'
                                 ],
 
                             getCookie: function() {
@@ -1677,7 +1680,8 @@
                                       'kisses you on the lips. Rape?',
                                       'gives you a sloppy french kiss.',
                                       'kisses you in a warm, motherly way.',
-                                      'kisses you somewhere elses :trollface:'
+                                      'kisses you somewhere else :trollface:',
+                                      'kisses you like a NoParadox would if he was better at kissing.'
                                 ],
 
                             getCookie: function() {
