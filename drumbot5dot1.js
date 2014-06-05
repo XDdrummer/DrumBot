@@ -741,7 +741,7 @@
                             else cmd = chat.message.substring(0,space);
                     }
                     else return false;
-                    if(chat.contains('@DrumBot')){
+                    if(chat.message.contains('DrumBot')){
                     	API.sendChat('I saw that');
                     }
                     else return false;
