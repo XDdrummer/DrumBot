@@ -741,6 +741,10 @@
                             else cmd = chat.message.substring(0,space);
                     }
                     else return false;
+                    if(chat.message.contains('@DrumBot')){
+                    	API.sendChat('I saw that');
+                    }
+                    else return false;
                     var userPerm = esBot.userUtilities.getPermission(chat.fromID);
                     if(chat.message !== "!join" && chat.message !== "!leave"){
                         if(userPerm === 0 && !esBot.room.usercommand) return void (0);
