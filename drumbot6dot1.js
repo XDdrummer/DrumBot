@@ -795,6 +795,7 @@
                         case '!jointime':           esBot.commands.jointimeCommand.functionality(chat, '!jointime');                    executed = true; break;
                         case '!kick':               esBot.commands.kickCommand.functionality(chat, '!kick');                            executed = true; break;
                         case '!kill':               esBot.commands.killCommand.functionality(chat, '!kill');  				executed = true; break;
+                        case '!suicide':	    esBot.commands.kill2Command.functionality(chat, '!suicide');			executed = true; break;				
                         case '!kiss':  		    esBot.commands.kissCommand.functionality(chat, '!kiss');
                         case '!leave':              esBot.commands.leaveCommand.functionality(chat, '!leave');                          executed = true; break;
                         case '!letsmusic':          esBot.commands.letsmusicCommand.functionality(chat, '!letsmusic');                  executed = true; break;
