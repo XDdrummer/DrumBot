@@ -787,7 +787,8 @@
                         case '!join':               esBot.commands.joinCommand.functionality(chat, '!join');                            executed = true; break;
                         case '!jointime':           esBot.commands.jointimeCommand.functionality(chat, '!jointime');                    executed = true; break;
                         case '!kick':               esBot.commands.kickCommand.functionality(chat, '!kick');                            executed = true; break;
-                        case '!kill':               esBot.commands.killCommand.functionality(chat, '!kill');                            executed = true; break;
+                        case '!kill':               esBot.commands.killCommand.functionality(chat, '!kill');  				executed = true; break;
+                        case '!kiss':  		    esBot.commands.kissCommand.functionality(chat, '!kiss');
                         case '!leave':              esBot.commands.leaveCommand.functionality(chat, '!leave');                          executed = true; break;
                         case '!letsmusic':          esBot.commands.letsmusicCommand.functionality(chat, '!letsmusic');                  executed = true; break;
                         case '!link':               esBot.commands.linkCommand.functionality(chat, '!link');                            executed = true; break;
@@ -1664,6 +1665,48 @@
                                         API.sendChat('/me Shutting down.');
                                         esBot.disconnectAPI();
                                         setTimeout(function(){kill();},1000);
+                                    };
+                            },
+                    },
+                    
+                                        cookieCommand: {
+                            rank: 'bouncer',
+                            type: 'startsWith',
+
+                            cookies: ['blows a kiss. They must be really lonely.',
+                                      'kisses you on the lips. Rape?'
+                                ],
+
+                            getCookie: function() {
+                                var c = Math.floor(Math.random() * this.cookies.length);
+                                return this.cookies[c];
+                            },
+
+                            functionality: function(chat, cmd){
+                                    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                    else{
+                                        var msg = chat.message;
+
+                                        var space = msg.indexOf(' ');
+                                        if(space === -1){
+                                            API.sendChat('/em eats a cookie.');
+                                            return false;
+                                        }
+                                        else{
+                                            var name = msg.substring(space + 2);
+                                            var user = esBot.userUtilities.lookupUserName(name);
+                                            if (user === false || !user.inRoom) {
+                                              return API.sendChat("/em doesn't see '" + name + "' in the room and eats a cookie himself.");
+                                            }
+                                            else if(user.username === chat.from){
+                                                return API.sendChat("/me @" + name +  ", you're a bit greedy, aren't you? Giving cookies to yourself, bah. Share some with other people!")
+                                            }
+                                            else {
+                                                return API.sendChat("/me @" + user.username + ", @" + chat.from + ' ' + this.getCookie() );
+                                            }
+                                        }
+
                                     };
                             },
                     },
