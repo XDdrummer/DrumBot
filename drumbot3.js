@@ -1304,7 +1304,9 @@
                             type: 'startsWith',
 
                             cookies: ['throws a cookie at you. That fucking hurt!',
-                                      'tries to give you a cookie, but accidentally gvies you posion.'
+                                      'tries to give you a cookie, but accidentally gvies you posion.',
+                                      'stole your moms fresh baked cookies, stuffed them up their ass, then tried to give them to you.',
+                                      'gave you a cookie. Too bad they suck at baking.'
                                 ],
 
                             getCookie: function() {
