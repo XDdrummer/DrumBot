@@ -1669,7 +1669,7 @@
                             },
                     },
                     
-                                        cookieCommand: {
+                    kissCommand: {
                             rank: 'bouncer',
                             type: 'startsWith',
 
