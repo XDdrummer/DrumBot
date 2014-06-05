@@ -1322,7 +1322,9 @@
                                        'gives you an Oreo cookie with a glass of milk!',
                                        'gives you a rainbow cookie made with love :heart:',
                                        'gives you an old cookie that was left out in the rain, it\'s moldy.',
-                                       'bakes you fresh cookies, it smells amazing.'
+                                       'bakes you fresh cookies, it smells amazing.',
+                                       'throws a cookie at you. That fucking hurt!',
+                                       'tries to give you a cookie, but accidentally gvies you posion.'
                                 ],
 
                             getCookie: function() {
