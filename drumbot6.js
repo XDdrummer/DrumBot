@@ -24,6 +24,13 @@
         esBot.status = false;
         console.log("Bot was killed.");
     }
+    
+    var suicide = function(){
+    	clearInterval(esBot.room.autodisableInterval);
+    	clearInterval(esBot.room.afkInterval);
+    	esBot.status = false;
+    	API.sendChat("I killed myself. Cries.");
+    }
 
     var storeToStorage = function(){
         localStorage.setItem("esBotRoomSettings", JSON.stringify(esBot.roomSettings));
@@ -1670,6 +1677,21 @@
                                         setTimeout(function(){kill();},1000);
                                     };
                             },
+                    },
+                    
+                    kill2Command: {
+                       	    rank: 'manager',
+                    	    type: 'exact',
+                    	    functionality: function(chat, cmd){
+                    	     	    if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    	    	    if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                    	    	    else{
+                    	    		storeToStorage();
+                    	    		API.sendChat('/me killed myself because you are all assholes :cry:');
+                    	    		esBot.disconnectAPI();
+                    	    		setTimeout(function(){suicide();},1000);
+                    	    	    };
+                    	    },
                     },
                     
                     kissCommand: {
