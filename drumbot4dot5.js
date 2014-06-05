@@ -1674,7 +1674,10 @@
                             type: 'startsWith',
 
                             cookies: ['blows a kiss. They must be really lonely.',
-                                      'kisses you on the lips. Rape?'
+                                      'kisses you on the lips. Rape?',
+                                      'gives you a sloppy french kiss.',
+                                      'kisses you in a warm, motherly way.',
+                                      'kisses you somewhere elses :trollface:'
                                 ],
 
                             getCookie: function() {
@@ -1697,10 +1700,10 @@
                                             var name = msg.substring(space + 2);
                                             var user = esBot.userUtilities.lookupUserName(name);
                                             if (user === false || !user.inRoom) {
-                                              return API.sendChat("/em doesn't see '" + name + "' in the room and eats a cookie himself.");
+                                              return API.sendChat("/em doesn't see '" + name + "' in the room and steals the kiss for himself.");
                                             }
                                             else if(user.username === chat.from){
-                                                return API.sendChat("/me @" + name +  ", you're a bit greedy, aren't you? Giving cookies to yourself, bah. Share some with other people!")
+                                                return API.sendChat("/me @" + name +  ", you're a bit of an idiot, trying to kiss yourself. Fucking stop man.")
                                             }
                                             else {
                                                 return API.sendChat("/me @" + user.username + ", @" + chat.from + ' ' + this.getCookie() );
