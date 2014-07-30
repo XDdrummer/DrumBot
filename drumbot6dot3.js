@@ -90,7 +90,7 @@
     var esBot = {
             version: "1.0",
             status: false,
-            name: "DrumBot",
+            name: "NoParabot",
             creator: "XDdrummer",
             loggedInID: null,
             scriptLink: "https://rawgit.com/XDdrummer/DrumBot/master/drumbot.js",
