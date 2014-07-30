@@ -1318,7 +1318,10 @@
                                       'gave you a cookie. Too bad they suck at baking.',
                                       'gives you a solid, dry cookie. Fuck that.',
                                       'hides a knife in the cookie then gives it to you, but who could blame them? No one likes you.',
-                                      'sings a song to you while you die of poison. Why did you eat that cookie, man???'
+                                      'sings a song to you while you die of poison. Why did you eat that cookie, man???',
+                                      'fucks your right in the pussy.',
+                                      'gives you a cookie baked with love and semen.',
+                                      'cookie, i eat cookie, u can haz cookie, om nom nom'
                                 ],
 
                             getCookie: function() {
@@ -1704,7 +1707,10 @@
                                       'gives you a sloppy french kiss.',
                                       'kisses you in a warm, motherly way.',
                                       'kisses you somewhere else :trollface:',
-                                      'kisses you like a NoParadox would if he was better at kissing.'
+                                      'kisses you like a NoParadox would if he was better at kissing.',
+                                      'fucks you right in the pussy.',
+                                      'licks you. You enjoy it.',
+                                      'says slurp slurp kiss kiss lelelelel'
                                 ],
 
                             getCookie: function() {
