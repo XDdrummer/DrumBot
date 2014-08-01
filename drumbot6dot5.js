@@ -18,7 +18,7 @@
 
     (function(){
     	
-    var killTrue(){
+    var killTrue = function(){
     	clearInterval(esBot.room.autodisableInterval);
         clearInterval(esBot.room.afkInterval);
         esBot.status = false;
