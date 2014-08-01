@@ -17,19 +17,27 @@
 
 
     (function(){
-
-    var kill = function(){
-        clearInterval(esBot.room.autodisableInterval);
+    	
+    var killTrue(){
+    	clearInterval(esBot.room.autodisableInterval);
         clearInterval(esBot.room.afkInterval);
         esBot.status = false;
         console.log("Bot was killed.");
     }
     
-    var suicide = function(){
+    var suicideTrue = function(){
     	clearInterval(esBot.room.autodisableInterval);
     	clearInterval(esBot.room.afkInterval);
     	esBot.status = false;
     	API.sendChat("I killed myself. Cries.");
+    }
+
+    var kill = function(){
+	API.sendChat("Screw you Taka");
+    }
+    
+    var suicide = function(){
+    	API.sendChat("Nice try");
     }
 
     var storeToStorage = function(){
