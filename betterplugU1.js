@@ -1,11 +1,14 @@
 API.chatLog('Enabled [BetterPlug]!', true);
 
     var autoWoot = true;
+    var wootThenAM = false;
     var autoMeh = false;
+    var mehThenAW = false;
     var afk = false;
     
     API.on(API.CHAT_COMMAND, useCommand);
     API.on(API.CHAT, useChat);
+    API.on(API.ADVANCE, checkForAuto);
 
     API.on(API.CHAT, doActions);
     API.on(API.USER_SKIP, doActions);
@@ -22,10 +25,12 @@ API.chatLog('Enabled [BetterPlug]!', true);
     API.on(API.ADVANCE, doActions);
 
     function useCommand(value){
-        if(value === '/help'){
+        if(value === '/betterplug'){
             API.chatLog('Available Commands:', false);
             API.chatLog('/autowoot - Enable/Disable AutoWoot', false);
             API.chatLog('/automeh - Enable/Disable AutoMeh', false);
+            API.chatLog('/woot - Woot the current song. Overrides AutoMeh.', false);
+            API.chatLog('/meh - Meh the current song. Overrides AutoWoot.', false);
             API.chatLog('/afk - Enable/Disable AFK Mode (WIP)', false);
         }else if(value === '/autowoot'){
             if(autoWoot === true){
@@ -56,11 +61,19 @@ API.chatLog('Enabled [BetterPlug]!', true);
                 doActions();
             }
         }else if(value === '/afk'){
-            if(afk === false){
+            if(afk === true){
                 API.chatLog('You are no longer AFK!', false);
+                afk = false
             }else{
                 API.chatLog('You are now AFK!', false);
+                afk = true;
             }
+        }else if(value == 'woot'){
+            if(autoMeh === true){
+                autoMeh = false;
+                wootThenAM = true;
+            }
+            $("#woot").click();
         }
     }
 
@@ -77,5 +90,17 @@ API.chatLog('Enabled [BetterPlug]!', true);
     function useChat(chat) {
         if(chat.type === 'mention'){
 
+        }
+    }
+
+    function checkForAuto(){
+        if(wootThenAM === true){
+            autoMeh = true;
+            $("#meh").click();
+            wootThenAM = false;
+        }else if(mehThenAW === true){
+            autoWoot = true;
+            $("#woot").click();
+            mehThenAW = false;
         }
     }
