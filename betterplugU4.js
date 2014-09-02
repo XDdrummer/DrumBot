@@ -111,4 +111,9 @@ API.chatLog('Enabled [BetterPlug]!', true);
             $("#woot").click();
             mehThenAW = false;
         }
+
+        if(wootThenAM === false && mehThenAW === false && autoWoot === false && autoMeh === false){
+           API.chatLog('[BetterPlug] Warning: No AutoWoot OR AutoMeh enabled!', true);
+        }
+
     }
