@@ -32,6 +32,7 @@ API.chatLog('Enabled [BetterPlug]!', true);
             API.chatLog('/overwoot - Woot the current song. Overrides AutoMeh.', false);
             API.chatLog('/overmeh - Meh the current song. Overrides AutoWoot.', false);
             API.chatLog('/afk - Enable/Disable AFK Mode (WIP)', false);
+            API.chatLog('/stats - View your currently enabled / disabled setting!', false);
         }else if(value === '/autowoot'){
             if(autoWoot === true){
                 API.chatLog('[BetterPlug] Disabled AutoWoot!', false);
@@ -80,6 +81,13 @@ API.chatLog('Enabled [BetterPlug]!', true);
                 mehThenAW = true;
             }
             $('#meh').click();
+        }else if(value === '/stats'){
+            API.chatLog('BetterPlug Stats:');
+            API.chatLog('AutoWoot:' + autoWoot);
+            API.chatLog('AutoMeh: ' + autoMeh);
+            API.chatLog('Currently Over-Wooting AutoMeh?: ' + wootThenAM);
+            API.chatLog('Currently Over-Mehing AutoWoot?: ' + mehThenAW);
+            API.chatLog('AFK: ' + afk);
         }
     }
 
