@@ -89,7 +89,9 @@ API.chatLog('Enabled [BetterPlug]!', true);
         }else if(autoMeh === true){
             $("#meh").click();
         }else{
-            API.chatLog('[BetterPlug] Warning: No AutoWoot OR AutoMeh enabled!', true);
+            if(wootThenAM === false && mehThenAW === false){
+               API.chatLog('[BetterPlug] Warning: No AutoWoot OR AutoMeh enabled!', true);
+            }
         }
     }
  
