@@ -6,6 +6,9 @@ API.chatLog('Enabled [BetterPlug]!', true);
     var mehThenAW = false;
     var afk = false;
     
+    var totalwoots = 0;
+    var totalmehs = 0;
+    
     API.on(API.CHAT_COMMAND, useCommand);
     API.on(API.CHAT, useChat);
     API.on(API.ADVANCE, checkForAuto);
@@ -97,6 +100,9 @@ API.chatLog('Enabled [BetterPlug]!', true);
         }else if(autoMeh === true){
             $("#meh").click();
         }
+        
+        
+        
     }
  
     function useChat(chat) {
